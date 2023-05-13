@@ -19,7 +19,7 @@ public class RestaurantEntity {
     private String name;
     private String address;
     @ManyToOne
-    @JoinColumn(name = "id_person")
+    @JoinColumn(name = "id_owner")
     private UserEntity userEntity;
     @Column(unique = true, nullable = false, length = 13)
     private String phone;

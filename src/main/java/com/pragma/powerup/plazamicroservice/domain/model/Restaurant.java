@@ -1,17 +1,15 @@
 package com.pragma.powerup.plazamicroservice.domain.model;
 
-import java.math.BigInteger;
-
 public class Restaurant {
     private int id;
     private String name;
     private String address;
-    private BigInteger ownerId;
-    private BigInteger phoneNumber;
+    private Long ownerId;
+    private Long phoneNumber;
     private String urlLogo;
     private String nit;
 
-    public Restaurant(int id, String name, String address, BigInteger ownerId, BigInteger phoneNumber, String urlLogo, String nit) {
+    public Restaurant(int id, String name, String address, Long ownerId, Long phoneNumber, String urlLogo, String nit) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -45,19 +43,19 @@ public class Restaurant {
         this.address = address;
     }
 
-    public BigInteger getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(BigInteger ownerId) {
+    public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
     }
 
-    public BigInteger getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(BigInteger phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

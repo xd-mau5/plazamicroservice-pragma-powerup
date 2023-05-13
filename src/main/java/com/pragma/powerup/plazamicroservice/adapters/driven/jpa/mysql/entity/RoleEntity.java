@@ -1,13 +1,9 @@
 package com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.entity;
 
-import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.entity.PersonEntity;
-import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.entity.RoleEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,19 +11,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user")
+@Table(name = "role")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserEntity {
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "id_person")
-    private PersonEntity personEntity;
-    @ManyToOne
-    @JoinColumn(name = "id_role")
-    private RoleEntity roleEntity;
+    private String name;
+    private String description;
 }
