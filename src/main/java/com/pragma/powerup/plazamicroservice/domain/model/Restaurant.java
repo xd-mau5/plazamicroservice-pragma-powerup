@@ -5,11 +5,11 @@ public class Restaurant {
     private String name;
     private String address;
     private Long ownerId;
-    private Long phoneNumber;
+    private String phoneNumber;
     private String urlLogo;
     private String nit;
 
-    public Restaurant(int id, String name, String address, Long ownerId, Long phoneNumber, String urlLogo, String nit) {
+    public Restaurant(int id, String name, String address, Long ownerId, String phoneNumber, String urlLogo, String nit) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -51,11 +51,11 @@ public class Restaurant {
         this.ownerId = ownerId;
     }
 
-    public Long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
