@@ -1,7 +1,7 @@
 package com.pragma.powerup.plazamicroservice.adapters.driving.http.controller;
 
-import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.request.RestaurantRequestDto;
-import com.pragma.powerup.plazamicroservice.adapters.driving.http.handlers.IRestaurantHandler;
+import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.request.CategoryRequestDto;
+import com.pragma.powerup.plazamicroservice.adapters.driving.http.handlers.ICategoryHandler;
 import com.pragma.powerup.plazamicroservice.configuration.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,26 +20,26 @@ import java.util.Collections;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/restaurant/")
+@RequestMapping("/category/")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "jwt")
-public class RestaurantRestController {
-    private final IRestaurantHandler restaurantHandler;
-    @Operation(summary = "Save a restaurant",
+public class CategoryRestController {
+    private final ICategoryHandler categoryHandler;
+    @Operation(summary = "Save a category",
             responses = {
-                @ApiResponse(responseCode = "201", description = "Restaurant saved",
+                @ApiResponse(responseCode = "201", description = "Category saved",
                         content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
-                @ApiResponse(responseCode = "400", description = "Invalid restaurant name",
+                @ApiResponse(responseCode = "400", description = "Invalid category name",
                         content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
                 @ApiResponse(responseCode = "401", description = "User is not a owner",
                         content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
-                @ApiResponse(responseCode = "409", description = "Restaurant already exist",
+                @ApiResponse(responseCode = "409", description = "Category already exist",
                         content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
-    @PostMapping("/save")
-    public ResponseEntity<Map<String, String>> saveRestaurant(@RequestBody RestaurantRequestDto restaurantRequestDto) {
-        restaurantHandler.saveRestaurant(restaurantRequestDto);
+    @PostMapping("/create")
+    public ResponseEntity<Map<String, String>> saveCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+        categoryHandler.saveCategory(categoryRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.RESTAURANT_CREATED_MESSAGE));
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.CATEGORY_CREATED_MESSAGE));
             }
 
 }

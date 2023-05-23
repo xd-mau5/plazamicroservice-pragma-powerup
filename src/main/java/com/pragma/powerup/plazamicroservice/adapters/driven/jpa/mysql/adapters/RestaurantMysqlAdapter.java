@@ -23,8 +23,13 @@ public class RestaurantMysqlAdapter implements IRestaurantPersistencePort {
         if (restaurantRepository.findByName(restaurant.getName()).isPresent()) {
             throw new RestaurantAlreadyExistException();
         }
+        if (restaurantRepository.findByNit(Long.getLong(restaurant.getNit())).isPresent()) {
+            throw new RestaurantAlreadyExistException();
+        }
+        if (restaurant.getOwnerId() == null) {
+            throw new UserIsNotAOwnerException();
+        }
         restaurantRepository.save(restaurantEntityMapper.toEntity(restaurant));
-        //TODO: Probar si esto funciona
     }
 }
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    private final List<String> excludedPrefixes = Arrays.asList("/auth/**", "/swagger-ui/**", "/actuator/**", "/restaurant/");
+    private final List<String> excludedPrefixes = Arrays.asList("/auth/**", "/swagger-ui/**", "/actuator/**");
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
@@ -31,5 +31,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
         }
         return false;
+    }
+    private String getToken(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        if (header != null && header.startsWith("Bearer ")) {
+            return header.substring(7); // return everything after "Bearer "
+        }
+        return null;
     }
 }

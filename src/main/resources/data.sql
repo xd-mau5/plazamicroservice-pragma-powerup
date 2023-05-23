@@ -1,2 +1,1 @@
-INSERT INTO `restaurant` (`id`, `address`, `name`, `nit`, `phone_number`, `url_logo`, `id_owner`)
-VALUES (1, 'Calle 27', 'Restaurante1', '1', '31054789547', 'https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6918e57475a843f59f_icon_clyde_black_RGB.svg', 2);
+INSERT INTO `restaurant` (`id`, `address`, `name`, `nit`, `phone_number`, `url_logo`, `id_owner`) VALUES (1, 'Calle 27', 'Restaurante1', '1', '31054789547', 'https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6918e57475a843f59f_icon_clyde_black_RGB.svg', 2);

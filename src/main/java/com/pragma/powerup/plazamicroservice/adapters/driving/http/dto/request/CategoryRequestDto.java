@@ -7,13 +7,9 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class RestaurantRequestDto {
-    private String name;
-    private String address;
+public class CategoryRequestDto {
     @NotBlank
-    @NotNull
-    private Long ownerId;
-    private Long phoneNumber;
-    private String urlLogo;
-    private String nit;
+    private String name;
+    @NotBlank
+    private String description;
 }

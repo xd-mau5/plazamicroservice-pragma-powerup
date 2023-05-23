@@ -6,6 +6,12 @@ public class Constants {
     }
     public static final String RESPONSE_MESSAGE_KEY = "message";
     public static final String RESPONSE_ERROR_KEY = "error";
+    public static final String DISH_CREATED_MESSAGE = "Dish created successfully";
+    public static final String DISH_ALREADY_EXIST_ERROR = "Dish already exist";
+    public static final String DISH_NOT_FOUND_ERROR = "Dish not found";
+    public static final String DISH_NAME_IS_INVALID_ERROR = "Dish name is invalid";
+    public static final String DISH_UPDATED_MESSAGE = "Dish updated successfully";
+    public static final String CATEGORY_CREATED_MESSAGE = "Category created successfully";
     public static final String RESTAURANT_CREATED_MESSAGE = "Restaurant created successfully";
     public static final String OWNER_IS_NOT_OVER_18_ERROR = "Owner is not over 18";
     public static final String RESTAURANT_ALREADY_EXIST_ERROR = "Restaurant already exist";
