@@ -1,19 +1,17 @@
 package com.pragma.powerup.plazamicroservice.domain.model;
 
-import java.math.BigInteger;
-
 public class Dishes {
 
-    private BigInteger id;
+    private Long id;
     private String name;
-    private BigInteger categoryId;
+    private Long categoryId;
     private String description;
     private float price;
-    private BigInteger restaurantId;
+    private Long restaurantId;
     private String imageUrl;
     private String active;
 
-    public Dishes(BigInteger id, String name, BigInteger categoryId, String description, float price, BigInteger restaurantId, String imageUrl, String active) {
+    public Dishes(Long id, String name, Long categoryId, String description, float price, Long restaurantId, String imageUrl, String active) {
         this.id = id;
         this.name = name;
         this.categoryId = categoryId;
@@ -24,11 +22,11 @@ public class Dishes {
         this.active = active;
     }
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -40,11 +38,11 @@ public class Dishes {
         this.name = name;
     }
 
-    public BigInteger getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(BigInteger categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -64,11 +62,11 @@ public class Dishes {
         this.price = price;
     }
 
-    public BigInteger getRestaurantId() {
+    public Long getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(BigInteger restaurantId) {
+    public void setRestaurantId(Long restaurantId) {
         this.restaurantId = restaurantId;
     }
 
