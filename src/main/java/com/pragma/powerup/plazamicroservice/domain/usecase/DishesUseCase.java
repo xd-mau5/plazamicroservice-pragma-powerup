@@ -1,6 +1,7 @@
 package com.pragma.powerup.plazamicroservice.domain.usecase;
 
 import com.pragma.powerup.plazamicroservice.domain.api.IDishesServicePort;
+import com.pragma.powerup.plazamicroservice.domain.model.UpdateDish;
 import com.pragma.powerup.plazamicroservice.domain.spi.IDishesPersistencePort;
 import com.pragma.powerup.plazamicroservice.domain.model.Dishes;
 
@@ -14,7 +15,7 @@ public class DishesUseCase implements IDishesServicePort {
         dishesPersistencePort.createDish(dishes);
     }
     @Override
-    public void updateDish(Long id, float price, String description) {
-        dishesPersistencePort.updateDish(id, price, description);
+    public void updateDish(Long id, UpdateDish updateDish) {
+        dishesPersistencePort.updateDish(id, updateDish);
     }
 }

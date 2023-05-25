@@ -5,7 +5,6 @@ import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.request.Up
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.handlers.IDishesHandler;
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.mapper.IDishesRequestMapper;
 import com.pragma.powerup.plazamicroservice.domain.api.IDishesServicePort;
-import com.pragma.powerup.plazamicroservice.domain.model.Dishes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +19,7 @@ public class DishesHandlerImpl implements IDishesHandler {
         dishesServicePort.createDish(dishesRequestMapper.toDishes(dishesRequestDto));
     }
     @Override
-    public void updateDish(Long id,UpdateDishesRequestDto updateDishesRequestDto) {
-        dishesServicePort.updateDish(id,dishesRequestMapper.updateDishes(DishesRequestDto.builder()
-                .description(updateDishesRequestDto.getDescription())
-                .price(updateDishesRequestDto.getPrice())
-                .build()));
+    public void updateDish(Long id, UpdateDishesRequestDto updateDishesRequestDto) {
+        dishesServicePort.updateDish(id, dishesRequestMapper.updateDishes(updateDishesRequestDto) );
     }
 }

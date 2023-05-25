@@ -6,8 +6,11 @@ import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.mappers.IDishesEntityMapper;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositories.IDishesRepository;
 import com.pragma.powerup.plazamicroservice.domain.model.Dishes;
+import com.pragma.powerup.plazamicroservice.domain.model.UpdateDish;
 import com.pragma.powerup.plazamicroservice.domain.spi.IDishesPersistencePort;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class DishesMysqlAdapter implements IDishesPersistencePort {
@@ -24,22 +27,26 @@ public class DishesMysqlAdapter implements IDishesPersistencePort {
         dishesRepository.save(dishesEntityMapper.toEntity(dishes));
     }
     @Override
-    public void updateDish(Long id, float price, String description) {
+    public void updateDish(Long id, UpdateDish updateDish) {
         if (id == null) {
             throw new NullPointerException();
         }
-        if (price < 0) {
+        if (updateDish.getDescription().isEmpty()) {
             throw new IllegalArgumentException();
         }
-        if (description.isEmpty()) {
+        if (updateDish.getPrice() < 0) {
             throw new IllegalArgumentException();
         }
         if (dishesRepository.findById(id).isEmpty()) {
             throw new NullPointerException();
         }
-        DishesEntity dishes = dishesRepository.findById(id).get();
-        dishes.setDescription(dishes.getDescription());
-        dishes.setPrice(dishes.getPrice());
+        Optional<DishesEntity> dishesOptional = dishesRepository.findById(id);
+        if (dishesOptional.isPresent()) {
+            DishesEntity dishes = dishesOptional.get();
+            dishes.setDescription(updateDish.getDescription());
+            dishes.setPrice(updateDish.getPrice());
+            dishesRepository.save(dishes);
+        }
     }
 
 }
