@@ -9,9 +9,9 @@ public class Dishes {
     private float price;
     private Long restaurantId;
     private String imageUrl;
-    private String active;
+    private boolean active;
 
-    public Dishes(Long id, String name, Long categoryId, String description, float price, Long restaurantId, String imageUrl, String active) {
+    public Dishes(Long id, String name, Long categoryId, String description, float price, Long restaurantId, String imageUrl, boolean active) {
         this.id = id;
         this.name = name;
         this.categoryId = categoryId;
@@ -78,11 +78,11 @@ public class Dishes {
         this.imageUrl = imageUrl;
     }
 
-    public String getActive() {
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 }

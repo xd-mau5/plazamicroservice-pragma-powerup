@@ -18,4 +18,8 @@ public class DishesUseCase implements IDishesServicePort {
     public void updateDish(Long id, UpdateDish updateDish) {
         dishesPersistencePort.updateDish(id, updateDish);
     }
+    @Override
+    public void updateDishStatus(Long id, boolean status) {
+        dishesPersistencePort.updateDishStatus(id, status);
+    }
 }

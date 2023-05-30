@@ -14,5 +14,5 @@ public class DishesResponseDto {
     private float price;
     private Long restaurantId;
     private String imageUrl;
-    private String active;
+    private boolean active;
 }

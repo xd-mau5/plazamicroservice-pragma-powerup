@@ -24,6 +24,7 @@ public class DishesMysqlAdapter implements IDishesPersistencePort {
         if (dishesRepository.findByName(dishes.getName()).isPresent()) {
             throw new DishesAlreadyExistException();
         }
+        dishes.setActive(true);
         dishesRepository.save(dishesEntityMapper.toEntity(dishes));
     }
     @Override
@@ -45,6 +46,21 @@ public class DishesMysqlAdapter implements IDishesPersistencePort {
             DishesEntity dishes = dishesOptional.get();
             dishes.setDescription(updateDish.getDescription());
             dishes.setPrice(updateDish.getPrice());
+            dishesRepository.save(dishes);
+        }
+    }
+    @Override
+    public void updateDishStatus(Long id, boolean status){
+        if (id == null) {
+            throw new NullPointerException();
+        }
+        if (dishesRepository.findById(id).isEmpty()) {
+            throw new NullPointerException();
+        }
+        Optional<DishesEntity> dishesOptional = dishesRepository.findById(id);
+        if (dishesOptional.isPresent()) {
+            DishesEntity dishes = dishesOptional.get();
+            dishes.setActive(status);
             dishesRepository.save(dishes);
         }
     }

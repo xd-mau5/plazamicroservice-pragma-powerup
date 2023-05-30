@@ -25,7 +25,7 @@ class DishesUseCaseTest {
 
     @Test
     void testCreateDish() {
-        Dishes dish = new Dishes(1L, "Dish Name", 1L, "Dish Description", 10.99f, 1L, "image.jpg", "Active");
+        Dishes dish = new Dishes(1L, "Dish Name", 1L, "Dish Description", 10.99f, 1L, "image.jpg", true);
         dishesUseCase.createDish(dish);
         verify(dishesPersistencePort).createDish(dish);
     }
@@ -36,5 +36,12 @@ class DishesUseCaseTest {
         UpdateDish updateDish = new UpdateDish("Updated Name", 15.99f);
         dishesUseCase.updateDish(id, updateDish);
         verify(dishesPersistencePort).updateDish(id, updateDish);
+    }
+    @Test
+    void testUpdateDishStatus() {
+        Long id = 1L;
+        boolean status = false;
+        dishesUseCase.updateDishStatus(id, status);
+        verify(dishesPersistencePort).updateDishStatus(id, status);
     }
 }
