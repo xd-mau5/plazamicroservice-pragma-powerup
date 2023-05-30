@@ -25,8 +25,8 @@ public class AuthHandlerImpl implements IAuthHandler {
     public String login(LoginRequestDto loginRequestDto) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String requestBody = "{\"userDni\":\"" + loginRequestDto
-                .getUserDni() + "\",\"password\":\"" + loginRequestDto.getPassword() + "\"}";
+        String requestBody = "{\"mail\":\"" + loginRequestDto
+                .getMail() + "\",\"password\":\"" + loginRequestDto.getPassword() + "\"}";
         HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
         ResponseEntity<String> response = restTemplate
                 .postForEntity(authApiUrl + "/auth/login", request, String.class);

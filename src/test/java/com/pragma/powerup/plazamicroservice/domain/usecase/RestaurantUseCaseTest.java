@@ -7,7 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class RestaurantUseCaseTest {
 
@@ -28,5 +33,17 @@ class RestaurantUseCaseTest {
                 "3107079023", "image.jpg", "1234");
         restaurantUseCase.createRestaurant(restaurant);
         verify(restaurantPersistencePort).createRestaurant(restaurant);
+    }
+    @Test
+    void testGetAllRestaurants() {
+        List<Restaurant> expectedRestaurants = Arrays.asList(
+                new Restaurant(1L, "Restaurant 1", "Description 1", 1L, "3107079023", "image1.jpg", "1234"),
+                new Restaurant(2L, "Restaurant 2", "Description 2", 2L, "3107079024", "image2.jpg", "12345")
+        );
+        when(restaurantPersistencePort.getAllRestaurants()).thenReturn(expectedRestaurants);
+
+        List<Restaurant> actualRestaurants = restaurantUseCase.getAllRestaurants();
+        verify(restaurantPersistencePort).getAllRestaurants();
+        assertEquals(expectedRestaurants, actualRestaurants);
     }
 }

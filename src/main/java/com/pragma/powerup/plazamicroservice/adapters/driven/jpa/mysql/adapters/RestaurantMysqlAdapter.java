@@ -1,15 +1,17 @@
 package com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.adapters;
 
+import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.entity.RestaurantEntity;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.InvalidRestaurantNameException;
+import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.NoDataFoundException;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.RestaurantAlreadyExistException;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.UserIsNotAOwnerException;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.mappers.IRestaurantEntityMapper;
-import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.mappers.IUserEntityMapper;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
 import com.pragma.powerup.plazamicroservice.domain.model.Restaurant;
-import com.pragma.powerup.plazamicroservice.domain.model.User;
 import com.pragma.powerup.plazamicroservice.domain.spi.IRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class RestaurantMysqlAdapter implements IRestaurantPersistencePort {
@@ -30,6 +32,15 @@ public class RestaurantMysqlAdapter implements IRestaurantPersistencePort {
             throw new UserIsNotAOwnerException();
         }
         restaurantRepository.save(restaurantEntityMapper.toEntity(restaurant));
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurants() {
+        List<RestaurantEntity> restaurantEntitiesList = restaurantRepository.findAll();
+        if (restaurantEntitiesList.isEmpty()) {
+            throw new NoDataFoundException();
+        }
+        return restaurantEntityMapper.toRestaurantList(restaurantEntitiesList);
     }
 }
 

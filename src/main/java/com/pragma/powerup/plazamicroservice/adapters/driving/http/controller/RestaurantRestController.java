@@ -1,6 +1,7 @@
 package com.pragma.powerup.plazamicroservice.adapters.driving.http.controller;
 
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.request.RestaurantRequestDto;
+import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.response.RestaurantResponseDto;
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.handlers.IRestaurantHandler;
 import com.pragma.powerup.plazamicroservice.configuration.Constants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,12 +12,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -42,4 +41,16 @@ public class RestaurantRestController {
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.RESTAURANT_CREATED_MESSAGE));
             }
 
+            @Operation(summary = "List all restaurants",
+                    responses = {
+                            @ApiResponse(responseCode = "200", description = "Restaurants listed",
+                                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
+                            @ApiResponse(responseCode = "404", description = "No restaurants found",
+                                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+                            @ApiResponse(responseCode = "401", description = "User is not a owner",
+                                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
+            @GetMapping("/list")
+            public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants() {
+                return ResponseEntity.ok(restaurantHandler.getAllRestaurants());
+            }
 }

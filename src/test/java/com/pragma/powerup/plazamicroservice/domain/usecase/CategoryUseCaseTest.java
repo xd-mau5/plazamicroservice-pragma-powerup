@@ -1,14 +1,22 @@
 package com.pragma.powerup.plazamicroservice.domain.usecase;
 
 import com.pragma.powerup.plazamicroservice.domain.model.Category;
+import com.pragma.powerup.plazamicroservice.domain.spi.ICategoryPersistencePort;
+import com.pragma.powerup.plazamicroservice.domain.usecase.CategoryUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 
 class CategoryTest {
 
     private Category category;
+    @Mock
+    private ICategoryPersistencePort categoryPersistencePort;
+    private CategoryUseCase categoryUseCase;
 
     @BeforeEach
     void setUp() {
@@ -16,6 +24,8 @@ class CategoryTest {
         String name = "Test Category";
         String description = "This is a test category";
         category = new Category(id, name, description);
+        MockitoAnnotations.openMocks(this);
+        categoryUseCase = new CategoryUseCase(categoryPersistencePort);
     }
 
     @Test
@@ -43,4 +53,11 @@ class CategoryTest {
         assertEquals(newName, category.getName());
         assertEquals(newDescription, category.getDescription());
     }
+    @Test
+    void testCreateCategory() {
+        Category category = new Category(1L, "Test Category", "This is a test category");
+        categoryUseCase.createCategory(category);
+        verify(categoryPersistencePort).createCategory(category);
+    }
+
 }
