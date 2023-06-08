@@ -2,6 +2,7 @@ package com.pragma.powerup.plazamicroservice.adapters.driving.http.controller;
 
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.request.DishesRequestDto;
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.request.UpdateDishesRequestDto;
+import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.response.DishesResponseDto;
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.handlers.IDishesHandler;
 import com.pragma.powerup.plazamicroservice.configuration.Constants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -66,5 +68,21 @@ public class DishesRestController {
     public ResponseEntity<Map<String, String>> updateDishStatus(@PathVariable Long id, @RequestParam boolean status) {
         dishesHandler.updateDishStatus(id, status);
         return ResponseEntity.ok().body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.DISH_SET_STATUS_MESSAGE));
+    }
+    @Operation(summary = "Get all dishes", description = "Get all dishes from a restaurant, you can filter by category",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Dishes found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
+                    @ApiResponse(responseCode = "401", description = "User is not a owner",
+                            content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
+    @GetMapping("/all/{idRestaurant}")
+    public ResponseEntity<List<DishesResponseDto>> getAllDishes(
+            @PathVariable Long idRestaurant,
+            @RequestParam(required = false) String category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        List<DishesResponseDto> dishes = dishesHandler.getAllDishes(idRestaurant, page, size, category);
+        return ResponseEntity.ok().body(dishes);
     }
 }

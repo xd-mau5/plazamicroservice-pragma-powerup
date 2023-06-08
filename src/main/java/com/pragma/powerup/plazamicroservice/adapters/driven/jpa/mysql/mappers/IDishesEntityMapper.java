@@ -9,6 +9,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
@@ -22,6 +24,8 @@ public interface IDishesEntityMapper {
     @Mapping(target = "imageUrl", source = "dishes.imageUrl")
     @Mapping(target = "active", source = "dishes.active")
     DishesEntity toEntity(Dishes dishes);
+    List<Dishes> toDishesList(List<DishesEntity> dishesEntities);
+    Dishes toDishes(DishesEntity dishesEntity);
 
     @Named("idToCategoryEntity")
     static CategoryEntity idToCategoryEntity(Long categoryId) {

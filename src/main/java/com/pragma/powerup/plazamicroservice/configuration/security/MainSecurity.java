@@ -33,7 +33,7 @@ public class MainSecurity {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/auth/login", "/swagger-ui.html", "/swagger-ui/**",
                                 "/v3/api-docs/**", "/actuator/health").permitAll()
-                        .requestMatchers("/dishes/list/", "/restaurant/list/", "/order/save/**").hasRole("USER")
+                        .requestMatchers("/dishes/all/", "/restaurant/list/", "/order/save/**").hasRole("USER")
                         .requestMatchers("dishes/update/**", "dishes/create/**", "dishes/status/**",
                                 "/category/**", "/order/change/**", "/order/set/**").hasRole("ADMIN")
                         .anyRequest().authenticated()

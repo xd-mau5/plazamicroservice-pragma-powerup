@@ -10,6 +10,8 @@ INSERT INTO `restaurant` (`id`, `address`, `name`, `nit`, `phone_number`, `url_l
 -- Insertando datos de prueba en la tabla de categorias
 INSERT INTO `category` (`id`, `description`, `name`) VALUES (1, 'Comida rapida', 'Comida rapida');
 INSERT INTO `category` (`id`, `description`, `name`) VALUES (2, 'Comida china', 'Comida china');
+INSERT INTO `category` (`id`, `description`, `name`) VALUES (3, 'Comida mexicana', 'Comida mexicana');
+INSERT INTO `category` (`id`, `description`, `name`) VALUES (4, 'Comida italiana', 'Comida italiana');
 -- Insertando datos de prueba en la tabla de platos
 -- Categoria 1
 INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (1, 1, 'Hamburguesa de queso', 'https://s7d1.scene7.com/is/image/mcdonalds/DC_202006_0003_Cheeseburger_StraightBun_832x472', 'Hamburguesa de queso', 10000, 1, 1);
@@ -17,6 +19,13 @@ INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `pr
 -- Categoria 2
 INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (3, 1, 'Arroz chino', 'https://www.comedera.com/wp-content/uploads/2014/01/arroz-chino-casero.jpg', 'Arroz chino', 10000, 2, 1);
 INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (4, 1, 'Tallarines', 'https://www.comedera.com/wp-content/uploads/2020/03/chopsuey1-1536x1152.jpeg', 'Chop suey', 10000, 2, 1);
+-- Categoria 3
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (5, 1, 'Tacos', 'https://www.comedera.com/wp-content/uploads/2014/01/tacos-de-carne.jpg', 'Tacos', 10000, 3, 1);
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (6, 1, 'Burritos', 'https://www.comedera.com/wp-content/uploads/2014/01/burritos.jpg', 'Burritos', 10000, 3, 1);
+-- Categoria 4
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (7, 1, 'Pizza', 'https://www.comedera.com/wp-content/uploads/2014/01/pizza.jpg', 'Pizza', 10000, 4, 1);
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (8, 1, 'Lasagna', 'https://www.comedera.com/wp-content/uploads/2014/01/lasagna.jpg', 'Lasagna', 10000, 4, 1);
+
 -- Insertando datos de prueba en la tabla de ordenes
 INSERT INTO `orders` (`id`, `order_date`, `status`, `id_chef`, `id_restaurant`, `id_client`) VALUES (1, '2020-10-10', 'En proceso', 3, 1, 4);
 INSERT INTO `orders` (`id`, `order_date`, `status`, `id_chef`, `id_restaurant`, `id_client`) VALUES (2, '2020-10-10', 'En proceso', 3, 1, 4);
