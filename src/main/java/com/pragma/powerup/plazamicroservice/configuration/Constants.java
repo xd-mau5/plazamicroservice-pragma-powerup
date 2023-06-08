@@ -10,7 +10,11 @@ public class Constants {
     public static final String DISH_ALREADY_EXIST_ERROR = "Dish already exist";
     public static final String DISH_NOT_FOUND_ERROR = "Dish not found";
     public static final String DISH_NAME_IS_INVALID_ERROR = "Dish name is invalid";
+    public static final String ORDER_CREATED_MESSAGE = "Order created successfully";
     public static final String DISH_UPDATED_MESSAGE = "Dish updated successfully";
+    public static final String ORDER_SET_TO_EMPLOYEE_MESSAGE = "Order set to employee successfully";
+    public static final String ORDER_STATUS_CHANGED_MESSAGE = "Order updated successfully";
+    public static final String DISHES_ORDERED_CREATED_MESSAGE = "Dishes ordered created successfully";
     public static final String DISH_SET_STATUS_MESSAGE = "Dish status set successfully";
     public static final String CATEGORY_CREATED_MESSAGE = "Category created successfully";
     public static final String RESTAURANT_CREATED_MESSAGE = "Restaurant created successfully";

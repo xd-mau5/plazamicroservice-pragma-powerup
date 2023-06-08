@@ -23,8 +23,8 @@ public class RestaurantHandlerImpl implements IRestaurantHandler {
         restaurantServicePort.createRestaurant(restaurantRequestMapper.toRestaurant(restaurantRequestDto));
     }
     @Override
-    public List<RestaurantResponseDto> getAllRestaurants() {
-        return restaurantResponseMapper.toResponseList(restaurantServicePort.getAllRestaurants());
+    public List<RestaurantResponseDto> getAllRestaurants(Integer page, Integer size) {
+        return restaurantResponseMapper.toResponseList(restaurantServicePort.getAllRestaurants(page, size));
     }
 
 

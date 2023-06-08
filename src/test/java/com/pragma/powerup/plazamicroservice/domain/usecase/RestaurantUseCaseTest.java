@@ -40,10 +40,10 @@ class RestaurantUseCaseTest {
                 new Restaurant(1L, "Restaurant 1", "Description 1", 1L, "3107079023", "image1.jpg", "1234"),
                 new Restaurant(2L, "Restaurant 2", "Description 2", 2L, "3107079024", "image2.jpg", "12345")
         );
-        when(restaurantPersistencePort.getAllRestaurants()).thenReturn(expectedRestaurants);
+        when(restaurantPersistencePort.getAllRestaurants(1,1)).thenReturn(expectedRestaurants);
 
-        List<Restaurant> actualRestaurants = restaurantUseCase.getAllRestaurants();
-        verify(restaurantPersistencePort).getAllRestaurants();
+        List<Restaurant> actualRestaurants = restaurantUseCase.getAllRestaurants(1,1);
+        verify(restaurantPersistencePort).getAllRestaurants(1,1);
         assertEquals(expectedRestaurants, actualRestaurants);
     }
 }

@@ -2,7 +2,6 @@ package com.pragma.powerup.plazamicroservice.configuration.security;
 
 import com.pragma.powerup.plazamicroservice.configuration.security.jwt.JwtEntryPoint;
 import com.pragma.powerup.plazamicroservice.configuration.security.jwt.JwtTokenFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,8 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class MainSecurity {
-    @Autowired
-    JwtEntryPoint jwtEntryPoint;
 
     @Bean
     public JwtTokenFilter jwtTokenFilter() {
@@ -31,12 +28,14 @@ public class MainSecurity {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtEntryPoint jwtEntryPoint) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/auth/login", "/swagger-ui.html", "/swagger-ui/**",
-                                "/v3/api-docs/**", "/actuator/health", "/restaurant/**", "/category/**",
-                                "/dishes/**").permitAll()
+                                "/v3/api-docs/**", "/actuator/health").permitAll()
+                        .requestMatchers("/dishes/list/", "/restaurant/list/", "/order/save/**").hasRole("USER")
+                        .requestMatchers("dishes/update/**", "dishes/create/**", "dishes/status/**",
+                                "/category/**", "/order/change/**", "/order/set/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin().disable()

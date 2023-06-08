@@ -5,6 +5,7 @@ import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.response.R
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.handlers.IRestaurantHandler;
 import com.pragma.powerup.plazamicroservice.configuration.Constants;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -40,17 +41,18 @@ public class RestaurantRestController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.RESTAURANT_CREATED_MESSAGE));
             }
-
-            @Operation(summary = "List all restaurants",
-                    responses = {
-                            @ApiResponse(responseCode = "200", description = "Restaurants listed",
+    @Operation(summary = "List all restaurants",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Restaurants listed",
                                     content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
-                            @ApiResponse(responseCode = "404", description = "No restaurants found",
+                    @ApiResponse(responseCode = "404", description = "No restaurants found",
                                     content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
-                            @ApiResponse(responseCode = "401", description = "User is not a owner",
+                    @ApiResponse(responseCode = "401", description = "User is not a client",
                                     content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
-            @GetMapping("/list")
-            public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants() {
-                return ResponseEntity.ok(restaurantHandler.getAllRestaurants());
+    @GetMapping("/list")
+    public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants(@Parameter(description = "Page number", example = "1") @RequestParam Integer page,
+                                                                         @Parameter(description = "Page size", example = "10") @RequestParam Integer size) {
+
+        return ResponseEntity.ok(restaurantHandler.getAllRestaurants(page, size));
             }
 }

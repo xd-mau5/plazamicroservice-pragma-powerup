@@ -4,7 +4,11 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,17 +17,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
+    @Autowired
+    JwtProvider jwtProvider;
 
     private final List<String> excludedPrefixes = Arrays.asList("/auth/**", "/swagger-ui/**", "/actuator/**");
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        SecurityContextHolder.getContext().setAuthentication(null);
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
+        String token = getToken(request);
+        if (token != null && jwtProvider.validateToken(token)) {
+            UserDetails userDetails = jwtProvider.getUserDetailsFromToken(token);
+            UsernamePasswordAuthenticationToken auth = new
+                    UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
         filterChain.doFilter(request, response);
     }
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         String currentRoute = request.getServletPath();
         for (String prefix : excludedPrefixes) {
             if (pathMatcher.matchStart(prefix, currentRoute)) {

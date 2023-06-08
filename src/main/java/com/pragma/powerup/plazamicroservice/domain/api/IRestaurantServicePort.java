@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IRestaurantServicePort {
     void createRestaurant(Restaurant restaurant);
-    List<Restaurant> getAllRestaurants();
+    List<Restaurant> getAllRestaurants(Integer page, Integer size);
 }

@@ -1,15 +1,15 @@
 package com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.adapters;
 
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.entity.RestaurantEntity;
-import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.InvalidRestaurantNameException;
-import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.NoDataFoundException;
-import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.RestaurantAlreadyExistException;
-import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.UserIsNotAOwnerException;
+import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.exceptions.*;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.mappers.IRestaurantEntityMapper;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
 import com.pragma.powerup.plazamicroservice.domain.model.Restaurant;
 import com.pragma.powerup.plazamicroservice.domain.spi.IRestaurantPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -33,12 +33,12 @@ public class RestaurantMysqlAdapter implements IRestaurantPersistencePort {
         }
         restaurantRepository.save(restaurantEntityMapper.toEntity(restaurant));
     }
-
     @Override
-    public List<Restaurant> getAllRestaurants() {
-        List<RestaurantEntity> restaurantEntitiesList = restaurantRepository.findAll();
+    public List<Restaurant> getAllRestaurants(Integer page, Integer size) {
+        Pageable pagination = PageRequest.of(page, size, Sort.by("name"));
+        List<RestaurantEntity> restaurantEntitiesList = restaurantRepository.findAll(pagination).getContent();
         if (restaurantEntitiesList.isEmpty()) {
-            throw new NoDataFoundException();
+            throw new RestaurantNotFoundException();
         }
         return restaurantEntityMapper.toRestaurantList(restaurantEntitiesList);
     }
