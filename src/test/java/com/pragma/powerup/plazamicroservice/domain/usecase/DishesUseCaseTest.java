@@ -44,4 +44,13 @@ class DishesUseCaseTest {
         dishesUseCase.updateDishStatus(id, status);
         verify(dishesPersistencePort).updateDishStatus(id, status);
     }
+    @Test
+    void testGetAllDishes() {
+        Long restaurantId = 1L;
+        Integer page = 1;
+        Integer size = 10;
+        String category = "category";
+        dishesUseCase.getAllDishes(restaurantId, page, size, category);
+        verify(dishesPersistencePort).getAllDishes(restaurantId, page, size, category);
+    }
 }
