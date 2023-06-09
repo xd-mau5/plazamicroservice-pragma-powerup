@@ -8,6 +8,4 @@ import java.util.Optional;
 public interface IRestaurantRepository extends JpaRepository<RestaurantEntity, Long> {
     Optional<RestaurantEntity> findByName(String name);
     Optional<RestaurantEntity> findByNit(Long nit);
-    Optional<RestaurantEntity> findById(Long id);
-    Optional <RestaurantEntity> findByIdAndUserEntityId(Long id, Long idUser);
 }

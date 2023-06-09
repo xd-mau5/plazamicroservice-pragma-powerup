@@ -1,31 +1,37 @@
 package com.pragma.powerup.plazamicroservice.domain.model;
 
-import java.math.BigInteger;
-
 public class DishesOrdered {
-    private BigInteger idOrder;
-    private BigInteger idDish;
+    private Long id;
+    private Long idOrder;
+    private Long idDish;
     private int quantity;
 
-    public DishesOrdered(BigInteger idOrder, BigInteger idDish, int quantity) {
+    public DishesOrdered(Long id,Long idOrder, Long idDish, int quantity) {
+        this.id = id;
         this.idOrder = idOrder;
         this.idDish = idDish;
         this.quantity = quantity;
     }
 
-    public BigInteger getIdOrder() {
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Long getIdOrder() {
         return idOrder;
     }
 
-    public void setIdOrder(BigInteger idOrder) {
+    public void setIdOrder(Long idOrder) {
         this.idOrder = idOrder;
     }
 
-    public BigInteger getIdDish() {
+    public Long getIdDish() {
         return idDish;
     }
 
-    public void setIdDish(BigInteger idDish) {
+    public void setIdDish(Long idDish) {
         this.idDish = idDish;
     }
 

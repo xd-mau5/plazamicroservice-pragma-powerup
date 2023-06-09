@@ -50,9 +50,11 @@ public class RestaurantRestController {
                     @ApiResponse(responseCode = "401", description = "User is not a client",
                                     content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))})
     @GetMapping("/list")
-    public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants(@Parameter(description = "Page number", example = "1") @RequestParam Integer page,
-                                                                         @Parameter(description = "Page size", example = "10") @RequestParam Integer size) {
-
-        return ResponseEntity.ok(restaurantHandler.getAllRestaurants(page, size));
-            }
+    public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants(
+            @Parameter(description = "Page number", example = "0") @RequestParam(defaultValue = "0") Integer page,
+            @Parameter(description = "Page size", example = "10") @RequestParam(defaultValue = "10") Integer size
+    ) {
+        return ResponseEntity.ok(restaurantHandler.
+                getAllRestaurants(page, size));
+    }
 }

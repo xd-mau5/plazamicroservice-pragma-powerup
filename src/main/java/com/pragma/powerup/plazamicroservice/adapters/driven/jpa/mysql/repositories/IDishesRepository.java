@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface IDishesRepository extends JpaRepository<DishesEntity, Long> {
     Optional<DishesEntity> findByName(String name);
     @NotNull Optional<DishesEntity> findById(@NotNull Long id);
-    Optional<DishesEntity> findByIdAndRestaurantEntity (Long id, Long idRestaurant);
+    Optional<DishesEntity> findByIdAndRestaurantEntityId (Long id, Long idRestaurant);
     Page<DishesEntity> findAll(Specification<DishesEntity> combinedSpecification, Pageable pagination);
 }

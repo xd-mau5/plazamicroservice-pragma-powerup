@@ -14,6 +14,7 @@ import java.util.List;
 unmappedTargetPolicy = ReportingPolicy.IGNORE,
 unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IRestaurantEntityMapper {
+    @Mapping(target = "id", source = "restaurant.id")
     @Mapping(target = "userEntity", source = "restaurant.ownerId", qualifiedByName = "idToUserEntity")
     @Mapping(target = "address", source = "restaurant.address")
     @Mapping(target = "name", source = "restaurant.name")
