@@ -2,6 +2,7 @@ package com.pragma.powerup.plazamicroservice.adapters.driving.http.controller;
 
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.request.DishesOrderedRequestDto;
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.request.OrderRequestDto;
+import com.pragma.powerup.plazamicroservice.adapters.driving.http.dto.response.OrderResponseDto;
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.handlers.IDishesOrderedHandler;
 import com.pragma.powerup.plazamicroservice.adapters.driving.http.handlers.IOrdersHandler;
 import com.pragma.powerup.plazamicroservice.configuration.Constants;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -98,5 +100,22 @@ public class OrdersRestController {
         ordersHandler.updateOrder(idOrder, status);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.ORDER_STATUS_CHANGED_MESSAGE));
+    }
+    @Operation(summary = "Get all orders", description = "This endpoint get all orders filtered by status",
+            responses = {
+            @ApiResponse(responseCode = "200", description = "Orders found",
+                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
+            @ApiResponse(responseCode = "401", description = "User is not a employee",
+                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map")))})
+    @PutMapping("/get/all/{status}")
+    public ResponseEntity<List<OrderResponseDto>> getAllOrders(
+            @PathVariable String status,
+            @RequestParam Long restaurantId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        List<OrderResponseDto> orders = ordersHandler.getAllOrdersByStatus(restaurantId, status, page, size);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(orders);
     }
 }

@@ -35,7 +35,8 @@ public class MainSecurity {
                                 "/v3/api-docs/**", "/actuator/health").permitAll()
                         .requestMatchers("/dishes/all/", "/restaurant/list/", "/order/save/").hasRole("USER")
                         .requestMatchers("dishes/update/**", "dishes/create/**", "dishes/status/**",
-                                "/category/**", "/order/set/employee/", "/order/change/status/").hasRole("ADMIN")
+                                "/category/**", "/order/change/status/").hasRole("ADMIN")
+                        .requestMatchers("/order/get/all/", "/order/set/employee/").hasRole("EMPLOYEE")
                         .anyRequest().authenticated()
                 )
                 .formLogin().disable()

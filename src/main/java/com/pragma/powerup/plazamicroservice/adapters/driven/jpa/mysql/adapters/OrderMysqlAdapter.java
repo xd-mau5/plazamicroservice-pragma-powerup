@@ -10,6 +10,12 @@ import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositori
 import com.pragma.powerup.plazamicroservice.domain.model.Orders;
 import com.pragma.powerup.plazamicroservice.domain.spi.IOrderPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class OrderMysqlAdapter implements IOrderPersistencePort {
@@ -74,5 +80,30 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         orderEntity.setChefEntity(chefEntity);
         ordersRepository.save(orderEntity);
     }
+    @Override
+    //TODO: Solo se pueden listar los pedidos del restaurante al que pertenece el empleado.
+    public List<Orders> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size){
+        if (restaurantId == null || status == null || page == null || size == null) {
+            throw new IllegalArgumentException("Parameters can't be null");
+        }
+        if (page < 0 || size < 0) {
+            throw new IllegalArgumentException("Invalid page or size");
+        }
+        if (restaurantRepository.findById(restaurantId).isEmpty()) {
+            throw new IllegalArgumentException("Restaurant doesn't exist");
+        }
+        Specification<OrderEntity> statusSpecification = (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("status"), status);
 
+        Specification<OrderEntity> restaurantSpecification = (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("restaurantEntity").get("id"), restaurantId);
+
+        Specification<OrderEntity> combinedSpecification = Specification.where(restaurantSpecification)
+                .and(statusSpecification);
+
+        Pageable pagination = PageRequest.of(page, size);
+
+        Page<OrderEntity> orderPage = ordersRepository.findAll(combinedSpecification, pagination);
+        return orderPage.map(ordersEntityMapper::toOrders).toList();
+    }
 }

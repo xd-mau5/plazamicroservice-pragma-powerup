@@ -19,6 +19,7 @@ public interface IOrdersEntityMapper {
     @Mapping(target = "chefEntity.id", source = "orders.chefId", qualifiedByName = "idToChefEntity")
     @Mapping(target = "orderDate", source = "orders.orderDate")
     OrderEntity toEntity(Orders orders);
+    Orders toOrders(OrderEntity orderEntity);
     @Named("idToUserEntity")
     default Long idToUserEntity(Long idUser) {
         return idUser;

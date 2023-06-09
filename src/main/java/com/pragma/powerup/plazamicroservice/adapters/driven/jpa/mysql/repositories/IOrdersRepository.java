@@ -2,6 +2,9 @@ package com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositor
 
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.entity.OrderEntity;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -11,5 +14,5 @@ public interface IOrdersRepository extends JpaRepository<OrderEntity, Long> {
     @NotNull
     Optional<OrderEntity> findById(@NotNull Long id);
     Optional<OrderEntity> findByUserEntityIdAndStatus(Long idUser, String status);
-    Optional<OrderEntity> findByRestaurantEntity (Long idRestaurant);
+    Page<OrderEntity> findAll(Specification<OrderEntity> combinedSpecification, Pageable pagination);
 }
