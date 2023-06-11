@@ -7,6 +7,6 @@ import java.util.List;
 public interface IOrderServicePort {
     void saveOrder(Orders orders);
     void updateOrder(Long idOrder, String status);
-    void setOrderToEmployee(Long idOrder, Long idEmployee);
+    List<Orders> setOrderToEmployee(Long idOrder, Long idEmployee, String status, Integer page, Integer size);
     List<Orders> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size);
 }

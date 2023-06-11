@@ -27,8 +27,8 @@ public class OrdersHandlerImpl implements IOrdersHandler {
             orderServicePort.updateOrder(idOrder, status);
         }
         @Override
-        public void setOrderToEmployee(Long idOrder, Long idEmployee) {
-            orderServicePort.setOrderToEmployee(idOrder, idEmployee);
+        public List<OrderResponseDto> setOrderToEmployee(Long idOrder, Long idEmployee, String status, Integer page, Integer size) {
+            return orderResponseMapper.toResponseList(orderServicePort.setOrderToEmployee(idOrder, idEmployee, status, page, size));
         }
         @Override
         public List<OrderResponseDto> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size) {

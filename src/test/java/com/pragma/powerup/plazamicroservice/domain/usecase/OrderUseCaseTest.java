@@ -52,8 +52,12 @@ class OrderUseCaseTest {
     void setOrderToEmployee() {
         Long idOrder = 1L;
         Long idEmployee = 1L;
-        orderUseCase.setOrderToEmployee(idOrder, idEmployee);
-        verify(orderPersistencePort).setOrderToEmployee(idOrder, idEmployee);
+        String status = "Terminado";
+        Integer page = 0;
+        Integer size = 10;
+        orderUseCase.setOrderToEmployee(idOrder, idEmployee, status, page, size);
+        verify(orderPersistencePort).setOrderToEmployee(idOrder, idEmployee, status, page, size);
+        assertEquals(0, page);
     }
     @Test
     void getAllOrdersByStatus() {

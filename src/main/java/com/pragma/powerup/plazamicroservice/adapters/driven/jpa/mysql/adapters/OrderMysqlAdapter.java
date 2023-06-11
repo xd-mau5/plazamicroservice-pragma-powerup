@@ -63,25 +63,8 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         ordersRepository.save(orderEntity);
     }
     @Override
-    public void setOrderToEmployee(Long idOrder, Long idEmployee) {
-        if (idOrder == null) {
-            throw new IllegalArgumentException("IdOrder can't be null");
-        }
-        if (idEmployee == null) {
-            throw new IllegalArgumentException("IdEmployee can't be null");
-        }
-
-        OrderEntity orderEntity = ordersRepository.findById(idOrder)
-                .orElseThrow(() -> new IllegalArgumentException("Order doesn't exist"));
-
-        UserEntity chefEntity = userRepository.findById(idEmployee)
-                .orElseThrow(() -> new IllegalArgumentException("Employee doesn't exist"));
-
-        orderEntity.setChefEntity(chefEntity);
-        ordersRepository.save(orderEntity);
-    }
-    @Override
     //TODO: Solo se pueden listar los pedidos del restaurante al que pertenece el empleado.
+    //TODO: Arreglar la salida de las entidades.
     public List<Orders> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size){
         if (restaurantId == null || status == null || page == null || size == null) {
             throw new IllegalArgumentException("Parameters can't be null");
@@ -105,5 +88,25 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
 
         Page<OrderEntity> orderPage = ordersRepository.findAll(combinedSpecification, pagination);
         return orderPage.map(ordersEntityMapper::toOrders).toList();
+    }
+    @Override
+    public List<Orders> setOrderToEmployee(Long idOrder, Long idEmployee, String status, Integer page, Integer size){
+        /*
+        TODO: Solo se pueden listar los pedidos del restaurante al que pertenece el empleado.
+        TODO: Arreglar la salida de las entidades.
+         */
+        if (idOrder == null || idEmployee == null || status == null) {
+            throw new IllegalArgumentException("Parameters can't be null");
+        }
+        OrderEntity orderEntity = ordersRepository.findById(idOrder)
+                .orElseThrow(() -> new IllegalArgumentException("Order doesn't exist"));
+
+        UserEntity chefEntity = userRepository.findById(idEmployee)
+                .orElseThrow(() -> new IllegalArgumentException("Employee doesn't exist"));
+
+        orderEntity.setStatus(status);
+        orderEntity.setChefEntity(chefEntity);
+        ordersRepository.save(orderEntity);
+        return getAllOrdersByStatus(orderEntity.getRestaurantEntity().getId(), status, page, size);
     }
 }

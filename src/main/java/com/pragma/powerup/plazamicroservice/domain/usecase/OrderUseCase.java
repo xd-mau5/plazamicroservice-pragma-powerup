@@ -20,8 +20,8 @@ public class OrderUseCase implements IOrderServicePort {
         orderPersistencePort.updateOrder(idOrder, status);
     }
     @Override
-    public void setOrderToEmployee(Long idOrder, Long idEmployee) {
-        orderPersistencePort.setOrderToEmployee(idOrder, idEmployee);
+    public List<Orders> setOrderToEmployee(Long idOrder, Long idEmployee, String status, Integer page, Integer size) {
+        return orderPersistencePort.setOrderToEmployee(idOrder, idEmployee, status, page, size);
     }
     @Override
     public List<Orders> getAllOrdersByStatus(Long idRestaurant, String status, Integer page, Integer size) {

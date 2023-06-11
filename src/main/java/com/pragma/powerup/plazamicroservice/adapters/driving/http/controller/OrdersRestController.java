@@ -74,13 +74,17 @@ public class OrdersRestController {
             @ApiResponse(responseCode = "404", description = "Order or employee not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map")))})
     @PutMapping("/set/employee/{idOrder}")
-    public ResponseEntity<Map<String, String>> setOrderToEmployee(
+    public ResponseEntity<List<OrderResponseDto>> setOrderToEmployee(
             @PathVariable Long idOrder,
-            @RequestParam Long idEmployee
+            @RequestParam(required = true, defaultValue = "1L") Long idEmployee,
+            @RequestParam(required = true, defaultValue = "En proceso") String status,
+            @RequestParam(required = true, defaultValue = "0") Integer page,
+            @RequestParam(required = true, defaultValue = "10") Integer size
+
     ) {
-        ordersHandler.setOrderToEmployee(idOrder, idEmployee);
+        List<OrderResponseDto> orderResponseDtoList = ordersHandler.setOrderToEmployee(idOrder, idEmployee, status, page, size);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.ORDER_SET_TO_EMPLOYEE_MESSAGE));
+                .body(orderResponseDtoList);
     }
     @Operation(summary = "Change the status of a order", description = "This endpoint change the status of a order",
             responses = {
