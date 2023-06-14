@@ -152,4 +152,17 @@ public class OrdersRestController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.ORDER_DELIVERED_MESSAGE));
     }
+    @Operation(summary = "Cancel a order if this is not being prepared yet", description = "This endpoint cancel a order if this is not being prepared yet",
+            responses = {
+            @ApiResponse(responseCode = "200", description = "Order canceled",
+                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
+            @ApiResponse(responseCode = "400", description = "Invalid order or status",
+                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map")))})
+    @PutMapping("/cancel/{idOrder}")
+    public ResponseEntity<Map<String, String>> cancelOrder(
+            @PathVariable Long idOrder
+    ) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,ordersHandler.cancelOrder(idOrder)));
+    }
 }

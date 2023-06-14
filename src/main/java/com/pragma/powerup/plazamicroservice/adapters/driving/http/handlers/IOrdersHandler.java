@@ -13,4 +13,5 @@ public interface IOrdersHandler {
     void sendMessageToUser(Long idOrder);
     void checkSecurityCode(Long idOrder, String securityCode);
     void deliverOrder(Long idOrder, String securityCode);
+    String cancelOrder(Long idOrder);
 }

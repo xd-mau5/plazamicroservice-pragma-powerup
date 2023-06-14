@@ -12,4 +12,5 @@ public interface IOrderServicePort {
     void sendMessageToUser(Long idOrder);
     boolean checkSecurityCode(Long idOrder, String securityCode);
     void deliverOrder(Long idOrder, String securityCode);
+    String cancelOrder(Long idOrder);
 }

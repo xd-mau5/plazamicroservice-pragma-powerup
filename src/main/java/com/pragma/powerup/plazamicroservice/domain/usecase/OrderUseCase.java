@@ -39,4 +39,8 @@ public class OrderUseCase implements IOrderServicePort {
     public void deliverOrder(Long idOrder, String securityCode) {
         orderPersistencePort.deliverOrder(idOrder, securityCode);
     }
+    @Override
+    public String cancelOrder(Long idOrder) {
+        return orderPersistencePort.cancelOrder(idOrder);
+    }
 }

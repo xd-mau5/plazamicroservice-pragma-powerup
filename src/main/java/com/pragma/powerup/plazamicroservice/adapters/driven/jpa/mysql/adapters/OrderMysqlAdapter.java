@@ -211,4 +211,26 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         orderEntity.setStatus("Entregado");
         ordersRepository.save(orderEntity);
     }
+    @Override
+    public String cancelOrder(Long idOrder){
+        if (idOrder == null) {
+            throw new IllegalArgumentException("IdOrder can't be null");
+        }
+        if (ordersRepository.findById(idOrder).isEmpty()) {
+            throw new OrderDoesntExistException();
+        }
+        if (ordersRepository.findById(idOrder).get().getStatus().equals("Cancelado")){
+            throw new IllegalArgumentException("Order is already canceled");
+        }
+        // if order can't be canceled return "Order is already being prepared, it can't be canceled"
+        if (!ordersRepository.findById(idOrder).get().getStatus().equals("Pendiente")){
+            return "Order is already being prepared, it can't be canceled";
+        }else {
+            OrderEntity orderEntity = ordersRepository.findById(idOrder)
+                    .orElseThrow(OrderDoesntExistException::new);
+            orderEntity.setStatus("Cancelado");
+            ordersRepository.save(orderEntity);
+            return "Order with ID: " + idOrder + " was canceled successfully";
+        }
+    }
 }
