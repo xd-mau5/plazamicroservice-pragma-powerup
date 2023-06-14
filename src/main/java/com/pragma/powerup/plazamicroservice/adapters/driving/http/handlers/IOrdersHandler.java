@@ -10,4 +10,6 @@ public interface IOrdersHandler {
     void updateOrder(Long idOrder, String status);
     List<OrderResponseDto> setOrderToEmployee(Long idOrder, Long idEmployee, String status, Integer page, Integer size);
     List<OrderResponseDto> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size);
+    void sendMessageToUser(Long idOrder);
+    void checkSecurityCode(Long idOrder, String securityCode);
 }

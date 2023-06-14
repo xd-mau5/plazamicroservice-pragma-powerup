@@ -34,4 +34,12 @@ public class OrdersHandlerImpl implements IOrdersHandler {
         public List<OrderResponseDto> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size) {
             return orderResponseMapper.toResponseList(orderServicePort.getAllOrdersByStatus(restaurantId, status, page, size));
         }
+        @Override
+        public void sendMessageToUser(Long idOrder) {
+            orderServicePort.sendMessageToUser(idOrder);
+        }
+        @Override
+        public void checkSecurityCode(Long idOrder, String securityCode) {
+            orderServicePort.checkSecurityCode(idOrder, securityCode);
+        }
 }

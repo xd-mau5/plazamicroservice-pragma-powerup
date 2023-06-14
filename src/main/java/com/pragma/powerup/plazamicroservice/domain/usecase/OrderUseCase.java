@@ -27,4 +27,12 @@ public class OrderUseCase implements IOrderServicePort {
     public List<Orders> getAllOrdersByStatus(Long idRestaurant, String status, Integer page, Integer size) {
         return orderPersistencePort.getAllOrdersByStatus(idRestaurant, status, page, size);
     }
+    @Override
+    public void sendMessageToUser(Long idOrder) {
+        orderPersistencePort.sendMessageToUser(idOrder);
+    }
+    @Override
+    public boolean checkSecurityCode(Long idOrder, String securityCode) {
+        return orderPersistencePort.checkSecurityCode(idOrder, securityCode);
+    }
 }

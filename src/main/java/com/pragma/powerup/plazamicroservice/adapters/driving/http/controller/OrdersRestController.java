@@ -122,4 +122,19 @@ public class OrdersRestController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(orders);
     }
+    @Operation(summary = "Send a SMS to a client", description = "This endpoint send a SMS to a client",
+            responses = {
+            @ApiResponse(responseCode = "200", description = "SMS sent",
+                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
+            @ApiResponse(responseCode = "400", description = "Invalid client or message",
+                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map")))})
+    @PostMapping("/send/sms")
+    public ResponseEntity<Map<String, String>> sendSMS(
+            @RequestParam Long idOrder
+    ) {
+        ordersHandler.sendMessageToUser(idOrder);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.MESSAGE_SENT));
+    }
+    
 }

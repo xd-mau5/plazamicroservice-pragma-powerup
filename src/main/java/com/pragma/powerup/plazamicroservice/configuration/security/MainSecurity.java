@@ -36,7 +36,7 @@ public class MainSecurity {
                         .requestMatchers("/dishes/all/", "/restaurant/list/", "/order/save/").hasRole("USER")
                         .requestMatchers("dishes/update/**", "dishes/create/**", "dishes/status/**",
                                 "/category/**", "/order/change/status/").hasRole("ADMIN")
-                        .requestMatchers("/order/get/all/", "/order/set/employee/").hasRole("EMPLOYEE")
+                        .requestMatchers("/order/get/all/", "/order/set/employee/", "/order/send/sms/").hasRole("EMPLOYEE")
                         .anyRequest().authenticated()
                 )
                 .formLogin().disable()

@@ -20,3 +20,5 @@ management:
 auth:
   api:
     url: http://xd-mau5.xyz:8090/
+message:
+  api:

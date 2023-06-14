@@ -68,4 +68,10 @@ class OrderUseCaseTest {
         orderUseCase.getAllOrdersByStatus(idRestaurant, status, page, size);
         verify(orderPersistencePort).getAllOrdersByStatus(idRestaurant, status, page, size);
     }
+    @Test
+    void sendMessageToUser() {
+        Long idOrder = 1L;
+        orderUseCase.sendMessageToUser(idOrder);
+        verify(orderPersistencePort).sendMessageToUser(idOrder);
+    }
 }
