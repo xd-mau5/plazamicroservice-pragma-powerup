@@ -42,4 +42,8 @@ public class OrdersHandlerImpl implements IOrdersHandler {
         public void checkSecurityCode(Long idOrder, String securityCode) {
             orderServicePort.checkSecurityCode(idOrder, securityCode);
         }
+        @Override
+        public void deliverOrder(Long idOrder, String securityCode) {
+            orderServicePort.deliverOrder(idOrder, securityCode);
+        }
 }

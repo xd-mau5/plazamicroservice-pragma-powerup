@@ -189,4 +189,26 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
             throw new MessageNotSendException();
         }
     }
+    @Override
+    public void deliverOrder(Long idOrder, String securityCode){
+        if (idOrder == null) {
+            throw new IllegalArgumentException("IdOrder can't be null");
+        }
+        if (ordersRepository.findById(idOrder).isEmpty()) {
+            throw new OrderDoesntExistException();
+        }
+        if (!checkSecurityCode(idOrder, securityCode)) {
+            throw new IllegalArgumentException("Invalid security code");
+        }
+        if (!ordersRepository.findById(idOrder).get().getStatus().equals("Listo")) {
+            throw new IllegalArgumentException("Order isn't ready");
+        }
+        if (ordersRepository.findById(idOrder).get().getStatus().equals("Entregado")){
+            throw new IllegalArgumentException("Order is already delivered");
+        }
+        OrderEntity orderEntity = ordersRepository.findById(idOrder)
+                .orElseThrow(OrderDoesntExistException::new);
+        orderEntity.setStatus("Entregado");
+        ordersRepository.save(orderEntity);
+    }
 }

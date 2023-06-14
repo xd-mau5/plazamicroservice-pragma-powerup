@@ -74,4 +74,11 @@ class OrderUseCaseTest {
         orderUseCase.sendMessageToUser(idOrder);
         verify(orderPersistencePort).sendMessageToUser(idOrder);
     }
+    @Test
+    void checkSecurityCode() {
+        Long idOrder = 1L;
+        String securityCode = "1234";
+        orderUseCase.checkSecurityCode(idOrder, securityCode);
+        verify(orderPersistencePort).checkSecurityCode(idOrder, securityCode);
+    }
 }

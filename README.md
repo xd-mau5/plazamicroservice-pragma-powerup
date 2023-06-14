@@ -55,7 +55,7 @@ To get a local copy up and running follow these steps.
       api:
          url: <user-microservice-api-url>
    ```
-8. Open Swagger UI and search the /auth/login endpoint and login with mail:         DishesEntity dishes = dishesRepository.findById(id).get();
+8. Open Swagger UI and search the /auth/login endpoint and login with mail: email@some.com 
    , password: 1234
 
 <!-- USAGE -->

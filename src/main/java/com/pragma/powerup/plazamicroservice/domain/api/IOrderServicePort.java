@@ -11,4 +11,5 @@ public interface IOrderServicePort {
     List<Orders> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size);
     void sendMessageToUser(Long idOrder);
     boolean checkSecurityCode(Long idOrder, String securityCode);
+    void deliverOrder(Long idOrder, String securityCode);
 }

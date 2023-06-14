@@ -136,5 +136,20 @@ public class OrdersRestController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.MESSAGE_SENT));
     }
-    
+    @Operation(summary = "Check if the security code is correct, if it is, deliver the order to the user",
+            description = "This endpoint check if the security code is correct, if it is, deliver the order to the user",
+            responses = {
+            @ApiResponse(responseCode = "200", description = "Order delivered",
+                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map"))),
+            @ApiResponse(responseCode = "400", description = "Invalid security code or order",
+                    content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Map")))})
+    @PutMapping("/deliver/{orderID}")
+    public ResponseEntity<Map<String, String>> deliverOrder(
+            @PathVariable Long orderID,
+            @RequestParam String securityCode
+    ) {
+        ordersHandler.deliverOrder(orderID, securityCode);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,Constants.ORDER_DELIVERED_MESSAGE));
+    }
 }

@@ -12,4 +12,5 @@ public interface IOrderPersistencePort {
     void sendMessageToUser(Long idOrder);
     String generateSecurityCode(Long idOrder, String status);
     boolean checkSecurityCode(Long idOrder, String securityCode);
+    void deliverOrder(Long idOrder, String securityCode);
 }

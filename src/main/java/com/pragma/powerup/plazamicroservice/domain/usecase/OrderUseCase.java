@@ -35,4 +35,8 @@ public class OrderUseCase implements IOrderServicePort {
     public boolean checkSecurityCode(Long idOrder, String securityCode) {
         return orderPersistencePort.checkSecurityCode(idOrder, securityCode);
     }
+    @Override
+    public void deliverOrder(Long idOrder, String securityCode) {
+        orderPersistencePort.deliverOrder(idOrder, securityCode);
+    }
 }
