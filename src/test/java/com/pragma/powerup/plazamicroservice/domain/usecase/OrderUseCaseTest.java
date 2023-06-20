@@ -81,4 +81,17 @@ class OrderUseCaseTest {
         orderUseCase.checkSecurityCode(idOrder, securityCode);
         verify(orderPersistencePort).checkSecurityCode(idOrder, securityCode);
     }
+    @Test
+    void deliverOrder() {
+        Long idOrder = 1L;
+        String securityCode = "1234";
+        orderUseCase.deliverOrder(idOrder, securityCode);
+        verify(orderPersistencePort).deliverOrder(idOrder, securityCode);
+    }
+    @Test
+    void cancelOrder() {
+        Long idOrder = 1L;
+        orderUseCase.cancelOrder(idOrder);
+        verify(orderPersistencePort).cancelOrder(idOrder);
+    }
 }

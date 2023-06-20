@@ -37,6 +37,7 @@ public class MainSecurity {
                         .requestMatchers("dishes/update/**", "dishes/create/**", "dishes/status/**",
                                 "/category/**", "/order/change/status/").hasRole("ADMIN")
                         .requestMatchers("/order/get/all/", "/order/set/employee/", "/order/send/sms/").hasRole("EMPLOYEE")
+                        .requestMatchers("/tractability/**", "/tractability/save/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin().disable()

@@ -3,6 +3,9 @@ package com.pragma.powerup.plazamicroservice.configuration;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.adapters.*;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.mappers.*;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositories.*;
+import com.pragma.powerup.plazamicroservice.adapters.driven.mongo.adapter.TractabilityMongoAdapter;
+import com.pragma.powerup.plazamicroservice.adapters.driven.mongo.mapper.ITractabilityEntityMapper;
+import com.pragma.powerup.plazamicroservice.adapters.driven.mongo.repository.ITractabilityRepository;
 import com.pragma.powerup.plazamicroservice.domain.api.*;
 import com.pragma.powerup.plazamicroservice.domain.spi.*;
 import com.pragma.powerup.plazamicroservice.domain.usecase.*;
@@ -27,6 +30,8 @@ public class BeanConfiguration {
     private final IDishesOrderedEntityMapper dishesOrderedEntityMapper;
     private final ICategoryRepository categoryRepository;
     private final ICategoryEntityMapper categoryEntityMapper;
+    private final ITractabilityRepository tractabilityRepository;
+    private final ITractabilityEntityMapper tractabilityEntityMapper;
     @Bean
     public IRestaurantServicePort restaurantServicePort() {
         return new RestaurantUseCase(restaurantPersistencePort());
@@ -53,7 +58,7 @@ public class BeanConfiguration {
     }
     @Bean
     public IOrderPersistencePort ordersPersistencePort() {
-        return new OrderMysqlAdapter(ordersRepository, ordersEntityMapper, userRepository, restaurantRepository, restTemplate());
+        return new OrderMysqlAdapter(ordersRepository, ordersEntityMapper, userRepository, restaurantRepository, tractabilityRepository, tractabilityEntityMapper, restTemplate());
     }
     @Bean
     public IOrderServicePort ordersServicePort() {
@@ -71,5 +76,12 @@ public class BeanConfiguration {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
-
+    @Bean
+    public ITractabilityPersistencePort tractabilityPersistencePort() {
+        return new TractabilityMongoAdapter(tractabilityRepository, tractabilityEntityMapper);
+    }
+    @Bean
+    public ITractabilityServicePort tractabilityServicePort() {
+        return new TractabilityUseCase(tractabilityPersistencePort());
+    }
 }

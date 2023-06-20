@@ -25,6 +25,7 @@ public class Constants {
     public static final String RESTAURANT_ALREADY_EXIST_ERROR = "Restaurant already exist";
     public static final String RESTAURANT_NAME_IS_INVALID_ERROR = "Restaurant name is invalid";
     public static final String RESTAURANT_NOT_FOUND_ERROR = "Restaurant not found";
+    public static final String TRACTABILITY_SAVED_MESSAGE = "Tractability saved";
     public static final String MESSAGE_SENT = "Message sent";
     public static final String SWAGGER_TITLE_MESSAGE = "Plaza API Pragma Power Up";
     public static final String SWAGGER_DESCRIPTION_MESSAGE = "Plaza microservice";

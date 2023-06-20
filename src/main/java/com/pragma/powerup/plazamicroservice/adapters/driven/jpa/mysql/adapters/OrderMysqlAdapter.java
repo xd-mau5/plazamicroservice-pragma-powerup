@@ -9,10 +9,14 @@ import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.mappers.IO
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositories.IOrdersRepository;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositories.IRestaurantRepository;
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.repositories.IUserRepository;
+import com.pragma.powerup.plazamicroservice.adapters.driven.mongo.mapper.ITractabilityEntityMapper;
+import com.pragma.powerup.plazamicroservice.adapters.driven.mongo.repository.ITractabilityRepository;
 import com.pragma.powerup.plazamicroservice.domain.model.Orders;
+import com.pragma.powerup.plazamicroservice.domain.model.Tractability;
 import com.pragma.powerup.plazamicroservice.domain.spi.IOrderPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringEscapeUtils;
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.pragma.powerup.plazamicroservice.configuration.Constants.*;
@@ -33,7 +38,10 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
     private final IOrdersEntityMapper ordersEntityMapper;
     private final IUserRepository userRepository;
     private final IRestaurantRepository restaurantRepository;
+    private final ITractabilityRepository tractabilityRepository;
+    private final ITractabilityEntityMapper tractabilityEntityMapper;
     private final RestTemplate restTemplate;
+
     @Override
     public void saveOrder(Orders orders) {
         if (orders == null) {
@@ -56,8 +64,9 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         orders.setChefId(1L);
         ordersRepository.save(ordersEntityMapper.toEntity(orders));
     }
+
     @Override
-    public void updateOrder(Long idOrder, String status){
+    public void updateOrder(Long idOrder, String status) {
         if (idOrder == null) {
             throw new IllegalArgumentException("IdOrder can't be null");
         }
@@ -69,13 +78,15 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         }
         OrderEntity orderEntity = ordersRepository.findById(idOrder)
                 .orElseThrow(OrderDoesntExistException::new);
+        sendTractabilityToMongo(idOrder, status);
         orderEntity.setStatus(status);
         ordersRepository.save(orderEntity);
     }
+
     @Override
     //TODO: Solo se pueden listar los pedidos del restaurante al que pertenece el empleado.
     //TODO: Arreglar la salida de las entidades.
-    public List<Orders> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size){
+    public List<Orders> getAllOrdersByStatus(Long restaurantId, String status, Integer page, Integer size) {
         if (restaurantId == null || status == null || page == null || size == null) {
             throw new IllegalArgumentException(NULL_PARAMETER_ERROR);
         }
@@ -99,8 +110,9 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         Page<OrderEntity> orderPage = ordersRepository.findAll(combinedSpecification, pagination);
         return orderPage.map(ordersEntityMapper::toOrders).toList();
     }
+
     @Override
-    public List<Orders> setOrderToEmployee(Long idOrder, Long idEmployee, String status, Integer page, Integer size){
+    public List<Orders> setOrderToEmployee(Long idOrder, Long idEmployee, String status, Integer page, Integer size) {
         /*
         TODO: Solo se pueden listar los pedidos del restaurante al que pertenece el empleado.
         TODO: Arreglar la salida de las entidades.
@@ -113,14 +125,15 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
 
         UserEntity chefEntity = userRepository.findById(idEmployee)
                 .orElseThrow(() -> new IllegalArgumentException("Employee doesn't exist"));
-
+        sendTractabilityToMongo(idOrder,status);
         orderEntity.setStatus(status);
         orderEntity.setChefEntity(chefEntity);
         ordersRepository.save(orderEntity);
         return getAllOrdersByStatus(orderEntity.getRestaurantEntity().getId(), status, page, size);
     }
+
     @Override
-    public String generateSecurityCode(Long idOrder, String status){
+    public String generateSecurityCode(Long idOrder, String status) {
         if (idOrder == null) {
             throw new IllegalArgumentException("IdOrder can't be null");
         }
@@ -137,7 +150,8 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         long securityCode = orderDateUnixTime + idSum;
         return Long.toString(securityCode);
     }
-    public String createMessageOrderReady(Long idOrder){
+
+    public String createMessageOrderReady(Long idOrder) {
         if (idOrder == null) {
             throw new IllegalArgumentException("Parameters can't be null");
         }
@@ -153,8 +167,9 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
                 "El N° de pedido es: " + orderEntity.getId() + "\n" +
                 "El código de seguridad es: " + generateSecurityCode(orderEntity.getId(), orderEntity.getStatus());
     }
+
     @Override
-    public boolean checkSecurityCode(Long idOrder, String securityCode){
+    public boolean checkSecurityCode(Long idOrder, String securityCode) {
         if (idOrder == null || securityCode == null) {
             throw new IllegalArgumentException("Parameters can't be null");
         }
@@ -169,6 +184,7 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         long securityCodeGenerated = orderDateUnixTime + idSum;
         return securityCode.equals(Long.toString(securityCodeGenerated));
     }
+
     @Override
     public void sendMessageToUser(Long idOrder) {
         String messageApiUrl = "http://xd-mau5.xyz:8093";
@@ -189,8 +205,9 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
             throw new MessageNotSendException();
         }
     }
+
     @Override
-    public void deliverOrder(Long idOrder, String securityCode){
+    public void deliverOrder(Long idOrder, String securityCode) {
         if (idOrder == null) {
             throw new IllegalArgumentException("IdOrder can't be null");
         }
@@ -203,34 +220,59 @@ public class OrderMysqlAdapter implements IOrderPersistencePort {
         if (!ordersRepository.findById(idOrder).get().getStatus().equals("Listo")) {
             throw new IllegalArgumentException("Order isn't ready");
         }
-        if (ordersRepository.findById(idOrder).get().getStatus().equals("Entregado")){
+        if (ordersRepository.findById(idOrder).get().getStatus().equals("Entregado")) {
             throw new IllegalArgumentException("Order is already delivered");
         }
         OrderEntity orderEntity = ordersRepository.findById(idOrder)
                 .orElseThrow(OrderDoesntExistException::new);
+        sendTractabilityToMongo(idOrder,"Entregado");
         orderEntity.setStatus("Entregado");
         ordersRepository.save(orderEntity);
     }
+
     @Override
-    public String cancelOrder(Long idOrder){
+    public String cancelOrder(Long idOrder) {
         if (idOrder == null) {
             throw new IllegalArgumentException("IdOrder can't be null");
         }
         if (ordersRepository.findById(idOrder).isEmpty()) {
             throw new OrderDoesntExistException();
         }
-        if (ordersRepository.findById(idOrder).get().getStatus().equals("Cancelado")){
+        if (ordersRepository.findById(idOrder).get().getStatus().equals("Cancelado")) {
             throw new IllegalArgumentException("Order is already canceled");
         }
-        // if order can't be canceled return "Order is already being prepared, it can't be canceled"
-        if (!ordersRepository.findById(idOrder).get().getStatus().equals("Pendiente")){
+        if (!ordersRepository.findById(idOrder).get().getStatus().equals("Pendiente")) {
             return "Order is already being prepared, it can't be canceled";
-        }else {
+        } else {
             OrderEntity orderEntity = ordersRepository.findById(idOrder)
                     .orElseThrow(OrderDoesntExistException::new);
             orderEntity.setStatus("Cancelado");
+            sendTractabilityToMongo(idOrder,"Cancelado");
             ordersRepository.save(orderEntity);
             return "Order with ID: " + idOrder + " was canceled successfully";
         }
+    }
+
+    public void sendTractabilityToMongo(Long idOrder, String newStatus) {
+        if (idOrder == null || newStatus == null) {
+            throw new IllegalArgumentException("Parameters can't be null");
+        }
+        if (ordersRepository.findById(idOrder).isEmpty()) {
+            throw new OrderDoesntExistException();
+        }
+        OrderEntity orderEntity = ordersRepository.findById(idOrder)
+                .orElseThrow(OrderDoesntExistException::new);
+        Tractability tractability = new Tractability(
+                ObjectId.get(),
+                orderEntity.getId(),
+                orderEntity.getUserEntity().getId(),
+                orderEntity.getUserEntity().getPersonEntity().getMail(),
+                LocalDateTime.now(),
+                orderEntity.getStatus(),
+                newStatus,
+                orderEntity.getChefEntity().getId(),
+                orderEntity.getChefEntity().getPersonEntity().getMail()
+        );
+        tractabilityRepository.save(tractabilityEntityMapper.toEntity(tractability));
     }
 }

@@ -12,6 +12,7 @@
 * ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 * ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
 * ![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+* ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
 
 <!-- GETTING STARTED -->
@@ -24,6 +25,7 @@ To get a local copy up and running follow these steps.
 * JDK 17 [https://jdk.java.net/java-se-ri/17](https://jdk.java.net/java-se-ri/17)
 * Gradle [https://gradle.org/install/](https://gradle.org/install/)
 * MySQL [https://dev.mysql.com/downloads/installer/](https://dev.mysql.com/downloads/installer/)
+* MongoDB [https://docs.mongodb.com/manual/installation/](https://docs.mongodb.com/manual/installation/)
 
 ### Recommended Tools
 * IntelliJ Community [https://www.jetbrains.com/idea/download/](https://www.jetbrains.com/idea/download/)
@@ -55,7 +57,21 @@ To get a local copy up and running follow these steps.
       api:
          url: <user-microservice-api-url>
    ```
-8. Open Swagger UI and search the /auth/login endpoint and login with mail: email@some.com 
+8. Set the MongoDB connection settings in the application-dev.yml file
+   ```yml
+   # src/main/resources/application-dev.yml
+   spring:
+        data:
+          mongodb:
+            auto-index-creation: true
+            database: <your-database-name>
+            authentication-database: <your-authentication-database>
+            host: <your-host>
+            port: <your-port>
+            username: <your-username>
+            password: <your-password>
+   ```
+9. Open Swagger UI and search the /auth/login endpoint and login with mail: email@some.com 
    , password: 1234
 
 <!-- USAGE -->
