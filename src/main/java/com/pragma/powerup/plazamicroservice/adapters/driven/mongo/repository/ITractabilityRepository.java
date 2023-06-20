@@ -9,4 +9,5 @@ import java.util.List;
 public interface ITractabilityRepository extends MongoRepository<TractabilityEntity, Long> {
     @NotNull List<TractabilityEntity> findAll();
     @NotNull List<TractabilityEntity> findAllByClientId (Long clientId);
+    @NotNull List<TractabilityEntity> findAllByOrderId(Long orderId);
 }

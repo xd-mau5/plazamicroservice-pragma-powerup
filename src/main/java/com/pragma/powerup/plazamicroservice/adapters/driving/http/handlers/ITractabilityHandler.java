@@ -9,4 +9,5 @@ public interface ITractabilityHandler {
     void saveTractability(TractabilityRequestDto tractabilityRequestDto);
     List<TractabilityResponseDto> findAllByClientId(Long clientId);
     List<TractabilityResponseDto> getAllTractabilities(Integer page, Integer size);
+    String calculateDurationPerOrder(Long orderId);
 }

@@ -8,4 +8,5 @@ public interface ITractabilityServicePort {
     void createTractability(Tractability tractability);
     List<Tractability> findAllByClientId(Long clientId);
     List<Tractability> getAllTractabilities(Integer page, Integer size);
+    String calculateDurationPerOrder(Long orderId);
 }

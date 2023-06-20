@@ -30,4 +30,8 @@ public class TractabilityHandlerImpl implements ITractabilityHandler {
     public List<TractabilityResponseDto> getAllTractabilities(Integer page, Integer size) {
         return tractabilityResponseMapper.toResponseList(tractabilityServicePort.getAllTractabilities(page, size));
     }
+    @Override
+    public String calculateDurationPerOrder(Long orderId) {
+        return tractabilityServicePort.calculateDurationPerOrder(orderId);
+    }
 }

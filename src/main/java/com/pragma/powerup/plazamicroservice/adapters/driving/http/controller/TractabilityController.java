@@ -83,4 +83,22 @@ public class TractabilityController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY, Constants.TRACTABILITY_SAVED_MESSAGE));
     }
+    @Operation(summary = "Calculate duration per order",
+            description = "Calculate duration per order",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Duration per order",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = TractabilityEntity.class)
+                            )
+                    )
+            }
+    )
+    @GetMapping("/duration/{orderId}")
+    public ResponseEntity<Map<String, String>> calculateDurationPerOrder(@PathVariable Long orderId) {
+        return ResponseEntity.ok(Collections.singletonMap(Constants.RESPONSE_MESSAGE_KEY,
+                tractabilityHandler.calculateDurationPerOrder(orderId)));
+    }
 }

@@ -25,4 +25,8 @@ public class TractabilityUseCase implements ITractabilityServicePort {
     public List<Tractability> getAllTractabilities(Integer page, Integer size) {
         return tractabilityPersistencePort.getAllTractabilities(page, size);
     }
+    @Override
+    public String calculateDurationPerOrder(Long orderId) {
+        return tractabilityPersistencePort.calculateDurationPerOrder(orderId);
+    }
 }
