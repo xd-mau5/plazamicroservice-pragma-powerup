@@ -60,7 +60,6 @@ public class DishesMysqlAdapter implements IDishesPersistencePort {
 
     @Override
     public void updateDishStatus(Long id, boolean status) {
-        //TODO: Validar que el owner del restaurante sea el que este haciendo la peticion para cambiar el estado del plato de ese restaurante
         if (id == null) {
             throw new NullPointerException();
         }

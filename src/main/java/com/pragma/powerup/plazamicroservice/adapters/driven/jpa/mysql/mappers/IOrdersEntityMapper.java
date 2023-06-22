@@ -2,7 +2,6 @@ package com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.mappers;
 
 import com.pragma.powerup.plazamicroservice.adapters.driven.jpa.mysql.entity.OrderEntity;
 import com.pragma.powerup.plazamicroservice.domain.model.Orders;
-import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

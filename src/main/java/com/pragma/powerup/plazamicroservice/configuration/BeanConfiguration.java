@@ -54,7 +54,7 @@ public class BeanConfiguration {
 
     @Bean
     public IDishesOrderedPersistencePort dishesOrderedPersistencePort() {
-        return new DishesOrderedMysqlAdapter(dishesOrderedRepository, dishesOrderedEntityMapper, dishesRepository, ordersRepository, ordersEntityMapper);
+        return new DishesOrderedMysqlAdapter(dishesOrderedRepository, dishesOrderedEntityMapper, dishesRepository, ordersRepository);
     }
     @Bean
     public IOrderPersistencePort ordersPersistencePort() {

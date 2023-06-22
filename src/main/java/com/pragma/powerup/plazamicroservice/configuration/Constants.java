@@ -21,12 +21,16 @@ public class Constants {
     public static final String DISH_SET_STATUS_MESSAGE = "Dish status set successfully";
     public static final String CATEGORY_CREATED_MESSAGE = "Category created successfully";
     public static final String RESTAURANT_CREATED_MESSAGE = "Restaurant created successfully";
-    public static final String OWNER_IS_NOT_OVER_18_ERROR = "Owner is not over 18";
     public static final String RESTAURANT_ALREADY_EXIST_ERROR = "Restaurant already exist";
     public static final String RESTAURANT_NAME_IS_INVALID_ERROR = "Restaurant name is invalid";
     public static final String RESTAURANT_NOT_FOUND_ERROR = "Restaurant not found";
     public static final String TRACTABILITY_SAVED_MESSAGE = "Tractability saved";
     public static final String MESSAGE_SENT = "Message sent";
+    public static final String INITIAL_STATUS = "Pendiente";
+    public static final String CANCELLED_STATUS = "Cancelado";
+    public static final String DELIVERED_STATUS = "Entregado";
+    public static final String ORDER_ID_CANNOT_BE_NULL_ERROR = "Order id cannot be null";
+    public static final String PARAMETER_CANNOT_BE_NULL_ERROR = "Parameter cannot be null";
     public static final String SWAGGER_TITLE_MESSAGE = "Plaza API Pragma Power Up";
     public static final String SWAGGER_DESCRIPTION_MESSAGE = "Plaza microservice";
     public static final String SWAGGER_VERSION_MESSAGE = "1.0.0";
