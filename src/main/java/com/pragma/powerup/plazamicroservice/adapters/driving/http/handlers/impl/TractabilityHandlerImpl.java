@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +34,9 @@ public class TractabilityHandlerImpl implements ITractabilityHandler {
     @Override
     public String calculateDurationPerOrder(Long orderId) {
         return tractabilityServicePort.calculateDurationPerOrder(orderId);
+    }
+    @Override
+    public Map<Long, String> calculateAverageDurationPerEmployee(){
+        return tractabilityServicePort.calculateAverageDurationPerEmployee();
     }
 }

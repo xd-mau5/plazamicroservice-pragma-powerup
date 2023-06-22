@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -36,6 +38,7 @@ public class TractabilityMongoAdapter implements ITractabilityPersistencePort {
         List<TractabilityEntity> tractabilityEntitiesList = tractabilityRepository.findAll(pagination).getContent();
         return tractabilityEntityMapper.toTractabilityList(tractabilityEntitiesList);
     }
+    @Override
     public String calculateDurationPerOrder(Long orderId) {
         List<TractabilityEntity> tractabilityEntitiesList = tractabilityRepository.findAllByOrderId(orderId);
 
@@ -61,5 +64,49 @@ public class TractabilityMongoAdapter implements ITractabilityPersistencePort {
             );
         }
     }
+    @Override
+    public Map<Long, String> calculateAverageDurationPerEmployee() {
+        Map<Long,Duration> durationPerEmployee = new HashMap<>();
+        Map<Long,Integer> countPerEmployee = new HashMap<>();
+        Map<Long,String> averageDurationPerEmployee = new HashMap<>();
 
+        List<TractabilityEntity> tractabilityEntitiesList = tractabilityRepository.findAll();
+        LocalDateTime startTime = null;
+        LocalDateTime endTime;
+        for (TractabilityEntity entity : tractabilityEntitiesList) {
+            if (entity.getPreviousState().equals("Pendiente")) {
+                startTime = entity.getDate();
+                Long employeeId = entity.getEmployeeId();
+
+                durationPerEmployee.put(employeeId, Duration.ZERO);
+                countPerEmployee.put(employeeId, 0);
+            }
+            if (entity.getNewState().equals("Entregado")) {
+                Long employeeId = entity.getEmployeeId();
+                endTime = entity.getDate();
+                assert startTime != null;
+                durationPerEmployee.put(employeeId, durationPerEmployee.get(employeeId).plus(Duration.between(startTime, endTime)));
+                countPerEmployee.put(employeeId, countPerEmployee.get(employeeId) + 1);
+            }
+        }
+
+        for (Map.Entry<Long, Duration> entry : durationPerEmployee.entrySet()) {
+            Long employeeId = entry.getKey();
+            Duration totalDuration = entry.getValue();
+            int count = countPerEmployee.get(employeeId);
+            Duration averageDuration;
+            if (count == 0) {
+                averageDuration = Duration.ZERO;
+            } else {
+                averageDuration = totalDuration.dividedBy(count);
+            }
+
+            String averageDurationString = averageDuration.toMinutes() + " minutos y "
+                    + averageDuration.toSecondsPart() + " segundos en entregar un pedido.";
+
+            averageDurationPerEmployee.put(employeeId, averageDurationString);
+        }
+
+        return averageDurationPerEmployee;
+    }
 }

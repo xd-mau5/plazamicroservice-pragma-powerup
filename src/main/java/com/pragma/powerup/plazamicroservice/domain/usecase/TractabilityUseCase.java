@@ -5,6 +5,7 @@ import com.pragma.powerup.plazamicroservice.domain.model.Tractability;
 import com.pragma.powerup.plazamicroservice.domain.spi.ITractabilityPersistencePort;
 
 import java.util.List;
+import java.util.Map;
 
 public class TractabilityUseCase implements ITractabilityServicePort {
     private final ITractabilityPersistencePort tractabilityPersistencePort;
@@ -28,5 +29,9 @@ public class TractabilityUseCase implements ITractabilityServicePort {
     @Override
     public String calculateDurationPerOrder(Long orderId) {
         return tractabilityPersistencePort.calculateDurationPerOrder(orderId);
+    }
+    @Override
+    public Map<Long, String> calculateAverageDurationPerEmployee(){
+        return tractabilityPersistencePort.calculateAverageDurationPerEmployee();
     }
 }
