@@ -1,0 +1,192 @@
+[{
+  "_id": {
+    "$oid": "649150902f83ff29fb9788f3"
+  },
+  "orderId": 19,
+  "clientId": 5,
+  "clientEmail": "isabella.martinez@example.com",
+  "date": {
+    "$date": "2023-06-20T07:09:04.015Z"
+  },
+  "previousState": "Pendiente",
+  "newState": "En proceso",
+  "employeeId": 3,
+  "employeeEmail": "maria.gomez@example.com",
+  "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+},
+  {
+    "_id": {
+      "$oid": "64915420d781de2970d31f21"
+    },
+    "orderId": 19,
+    "clientId": 5,
+    "clientEmail": "isabella.martinez@example.com",
+    "date": {
+      "$date": "2023-06-20T07:24:16.069Z"
+    },
+    "previousState": "En proceso",
+    "newState": "Listo",
+    "employeeId": 3,
+    "employeeEmail": "maria.gomez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "649154cad781de2970d31f22"
+    },
+    "orderId": 19,
+    "clientId": 5,
+    "clientEmail": "isabella.martinez@example.com",
+    "date": {
+      "$date": "2023-06-20T07:27:06.717Z"
+    },
+    "previousState": "Listo",
+    "newState": "Entregado",
+    "employeeId": 3,
+    "employeeEmail": "maria.gomez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "749150902f83ff29fb9788f3"
+    },
+    "orderId": 20,
+    "clientId": 6,
+    "clientEmail": "juan.perez@example.com",
+    "date": {
+      "$date": "2023-06-21T10:15:32.015Z"
+    },
+    "previousState": "Pendiente",
+    "newState": "En proceso",
+    "employeeId": 4,
+    "employeeEmail": "luis.rodriguez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "74915420d781de2970d31f22"
+    },
+    "orderId": 20,
+    "clientId": 6,
+    "clientEmail": "juan.perez@example.com",
+    "date": {
+      "$date": "2023-06-21T10:35:44.069Z"
+    },
+    "previousState": "En proceso",
+    "newState": "Listo",
+    "employeeId": 4,
+    "employeeEmail": "luis.rodriguez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "749154cad781de2970d31f23"
+    },
+    "orderId": 20,
+    "clientId": 6,
+    "clientEmail": "juan.perez@example.com",
+    "date": {
+      "$date": "2023-06-21T10:45:59.717Z"
+    },
+    "previousState": "Listo",
+    "newState": "Entregado",
+    "employeeId": 4,
+    "employeeEmail": "luis.rodriguez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "849150902f83ff29fb9788f3"
+    },
+    "orderId": 21,
+    "clientId": 7,
+    "clientEmail": "marta.gonzalez@example.com",
+    "date": {
+      "$date": "2023-06-21T14:50:12.015Z"
+    },
+    "previousState": "Pendiente",
+    "newState": "En proceso",
+    "employeeId": 5,
+    "employeeEmail": "carlos.sanchez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "84915420d781de2970d31f24"
+    },
+    "orderId": 21,
+    "clientId": 7,
+    "clientEmail": "marta.gonzalez@example.com",
+    "date": {
+      "$date": "2023-06-21T15:12:24.069Z"
+    },
+    "previousState": "En proceso",
+    "newState": "Listo",
+    "employeeId": 5,
+    "employeeEmail": "carlos.sanchez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "849154cad781de2970d31f25"
+    },
+    "orderId": 21,
+    "clientId": 7,
+    "clientEmail": "marta.gonzalez@example.com",
+    "date": {
+      "$date": "2023-06-21T15:25:36.717Z"
+    },
+    "previousState": "Listo",
+    "newState": "Entregado",
+    "employeeId": 5,
+    "employeeEmail": "carlos.sanchez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "949150902f83ff29fb9788f3"
+    },
+    "orderId": 22,
+    "clientId": 8,
+    "clientEmail": "roberto.lopez@example.com",
+    "date": {
+      "$date": "2023-06-21T18:30:48.015Z"
+    },
+    "previousState": "Pendiente",
+    "newState": "En proceso",
+    "employeeId": 6,
+    "employeeEmail": "ana.perez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "94915420d781de2970d31f26"
+    },
+    "orderId": 22,
+    "clientId": 8,
+    "clientEmail": "roberto.lopez@example.com",
+    "date": {
+      "$date": "2023-06-21T18:52:00.069Z"
+    },
+    "previousState": "En proceso",
+    "newState": "Listo",
+    "employeeId": 6,
+    "employeeEmail": "ana.perez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  },
+  {
+    "_id": {
+      "$oid": "949154cad781de2970d31f27"
+    },
+    "orderId": 22,
+    "clientId": 8,
+    "clientEmail": "roberto.lopez@example.com",
+    "date": {
+      "$date": "2023-06-21T19:05:12.717Z"
+    },
+    "previousState": "Listo",
+    "newState": "Entregado",
+    "employeeId": 6,
+    "employeeEmail": "ana.perez@example.com",
+    "_class": "com.pragma.powerup.plazamicroservice.adapters.driven.mongo.entity.TractabilityEntity"
+  }]

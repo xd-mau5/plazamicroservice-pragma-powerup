@@ -1,64 +1,36 @@
-INSERT INTO `person` (
-    `id`,
-    `address`,
-    `dni_number`,
-    `id_dni_type`,
-    `id_person_type`,
-    `mail`,
-    `name`,
-    `password`,
-    `phone`,
-    `surname`,
-    `token_password`
-  )
-VALUES
-  (
-    '1',
-    'st 123 # 456',
-    '123',
-    '1',
-    '1',
-    'email@some.com',
-    'Name',
-    '$2a$10$GlsGSNhkbVon6ZOSNMptOu5RikedRzlCAhMa7YpwvUSS0c88WT99S',
-    '1234567890',
-    'Surname',
-    NULL
-  );
+/*Insertar datos de prueba
+  Insertando datos de prueba en la base de datos de restaurante, categorias,
+  platos, ordenes
+ */
+ -- Insertando datos de prueba en la tabla de restaurante
+INSERT INTO `restaurant` (`id`, `address`, `name`, `nit`, `phone_number`, `url_logo`, `owner_id`) VALUES (1, 'Calle 27', 'Restaurante1', '1', '31054789547', 'https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6918e57475a843f59f_icon_clyde_black_RGB.svg', 2);
+INSERT INTO `restaurant` (`id`, `address`, `name`, `nit`, `phone_number`, `url_logo`, `owner_id`) VALUES (2, 'Calle 28', 'Restaurante2', '2', '31054789548', 'https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6918e57475a843f59f_icon_clyde_black_RGB.svg', 5);
+INSERT INTO `restaurant` (`id`, `address`, `name`, `nit`, `phone_number`, `url_logo`, `owner_id`) VALUES (3, 'Calle 29', 'a', '3', '31054789549', 'https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6918e57475a843f59f_icon_clyde_black_RGB.svg', 2);
+INSERT INTO `restaurant` (`id`, `address`, `name`, `nit`, `phone_number`, `url_logo`, `owner_id`) VALUES (4, 'Calle 30', 'b', '4', '31054789540', 'https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6918e57475a843f59f_icon_clyde_black_RGB.svg', 5);
+-- Insertando datos de prueba en la tabla de categorias
+INSERT INTO `category` (`id`, `description`, `name`) VALUES (1, 'Comida rapida', 'Comida rapida');
+INSERT INTO `category` (`id`, `description`, `name`) VALUES (2, 'Comida china', 'Comida china');
+INSERT INTO `category` (`id`, `description`, `name`) VALUES (3, 'Comida mexicana', 'Comida mexicana');
+INSERT INTO `category` (`id`, `description`, `name`) VALUES (4, 'Comida italiana', 'Comida italiana');
+-- Insertando datos de prueba en la tabla de platos
+-- Categoria 1
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (1, 1, 'Hamburguesa de queso', 'https://s7d1.scene7.com/is/image/mcdonalds/DC_202006_0003_Cheeseburger_StraightBun_832x472', 'Hamburguesa de queso', 10000, 1, 1);
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (2, 1, 'Hamburguesa de pollo', 'https://s7d1.scene7.com/is/image/mcdonalds/DC_201909_4314_McChicken_832x472', 'Hamburguesa de pollo', 10000, 1, 1);
+-- Categoria 2
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (3, 1, 'Arroz chino', 'https://www.comedera.com/wp-content/uploads/2014/01/arroz-chino-casero.jpg', 'Arroz chino', 10000, 2, 1);
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (4, 1, 'Tallarines', 'https://www.comedera.com/wp-content/uploads/2020/03/chopsuey1-1536x1152.jpeg', 'Chop suey', 10000, 2, 1);
+-- Categoria 3
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (5, 1, 'Tacos', 'https://www.comedera.com/wp-content/uploads/2014/01/tacos-de-carne.jpg', 'Tacos', 10000, 3, 1);
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (6, 1, 'Burritos', 'https://www.comedera.com/wp-content/uploads/2014/01/burritos.jpg', 'Burritos', 10000, 3, 1);
+-- Categoria 4
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (7, 1, 'Pizza', 'https://www.comedera.com/wp-content/uploads/2014/01/pizza.jpg', 'Pizza', 10000, 4, 1);
+INSERT INTO `dishes` (`id`, `is_active`, `description`, `image_url`, `name`, `price`, `id_category`, `id_restaurant`) VALUES (8, 1, 'Lasagna', 'https://www.comedera.com/wp-content/uploads/2014/01/lasagna.jpg', 'Lasagna', 10000, 4, 1);
 
-INSERT INTO `person` (
-    `id`,
-    `address`,
-    `birth_date`,
-    `dni_number`,
-    `id_dni_type`,
-    `id_person_type`,
-    `mail`,
-    `name`,
-    `password`,
-    `phone`,
-    `surname`,
-    `token_password`
-)
-VALUES
-  (
-    '2',
-    'st 123 # 456',
-    '01-01-2022',
-    '1234',
-    '1',
-    '3',
-    'mau5@mau5.com',
-    'Mau5',
-    '$2a$10$7CMLZzXnikN6JUqK5h3wRutvRO8/XkCR.B88VDnVMKf629WGY7Rj2',
-    '123456789',
-    'Mau5',
-    NULL
-    );
-
-
-INSERT INTO `role` (`id`, `description`, `name`) VALUES ('1', 'ROLE_ADMIN', 'ROLE_ADMIN');
-INSERT INTO `role` (`id`, `description`, `name`) VALUES ('2', 'ROLE_OWNER', 'ROLE_OWNER');
-INSERT INTO `role` (`id`, `description`, `name`) VALUES ('3', 'ROLE_USER', 'ROLE_USER');
-
-INSERT INTO `user` (`id_person`, `id_role`) VALUES ('1', '1');
+-- Insertando datos de prueba en la tabla de ordenes
+INSERT INTO `orders` (`id`, `order_date`, `status`, `id_chef`, `id_restaurant`, `id_client`) VALUES (1, '2020-10-10', 'En proceso', 3, 1, 4);
+INSERT INTO `orders` (`id`, `order_date`, `status`, `id_chef`, `id_restaurant`, `id_client`) VALUES (2, '2020-10-10', 'En proceso', 3, 1, 4);
+INSERT INTO `orders` (`id`, `order_date`, `status`, `id_chef`, `id_restaurant`, `id_client`) VALUES (3, '2020-10-10', 'En proceso', 3, 1, 4);
+-- Insertando datos de prueba en la tabla de ordenes platos
+INSERT INTO `dishes_ordered` (`id`, `dishes`, `orders`, `quantity`) VALUES (1, 1, 1, 2);
+INSERT INTO `dishes_ordered` (`id`, `dishes`, `orders`, `quantity`) VALUES (2, 2, 1, 1);
+INSERT INTO `dishes_ordered` (`id`, `dishes`, `orders`, `quantity`) VALUES (3, 3, 2, 1);

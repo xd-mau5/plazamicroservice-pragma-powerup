@@ -12,6 +12,7 @@
 * ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 * ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
 * ![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+* ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
 
 <!-- GETTING STARTED -->
@@ -24,6 +25,7 @@ To get a local copy up and running follow these steps.
 * JDK 17 [https://jdk.java.net/java-se-ri/17](https://jdk.java.net/java-se-ri/17)
 * Gradle [https://gradle.org/install/](https://gradle.org/install/)
 * MySQL [https://dev.mysql.com/downloads/installer/](https://dev.mysql.com/downloads/installer/)
+* MongoDB [https://docs.mongodb.com/manual/installation/](https://docs.mongodb.com/manual/installation/)
 
 ### Recommended Tools
 * IntelliJ Community [https://www.jetbrains.com/idea/download/](https://www.jetbrains.com/idea/download/)
@@ -34,26 +36,49 @@ To get a local copy up and running follow these steps.
 1. Clone the repository
 2. Change directory
    ```sh
-   cd power-up-arquetipo-v3
+   cd plazamicroservice-pragma-powerup
    ```
-3. Create a new database in MySQL called powerup
-4. Update the database connection settings
+3. In the application-dev.yml file, there is included a database connection to a remote database, if you want to use it, you can skip to the 7th step, otherwise, you can follow the next steps to use a local database
+4. If you want to use a local database, you can follow the next steps, create a new database in MySQL called powerup
+5. Update the database connection settings
    ```yml
    # src/main/resources/application-dev.yml
    spring:
       datasource:
           url: jdbc:mysql://localhost/powerup
-          username: root
+          username: <your-username>
           password: <your-password>
    ```
-5. After the tables are created execute src/main/resources/data.sql content to populate the database
-6. Open Swagger UI and search the /auth/login endpoint and login with userDni: 123, password: 1234
+6. After the tables are created by running the application, execute src/main/resources/data.sql content to populate the database
+7. Set the user microservice API url in the application-dev.yml file
+   ```yml
+   # src/main/resources/application-dev.yml
+   auth:
+      api:
+         url: <user-microservice-api-url>
+   ```
+8. Set the MongoDB connection settings in the application-dev.yml file
+   ```yml
+   # src/main/resources/application-dev.yml
+   spring:
+        data:
+          mongodb:
+            auto-index-creation: true
+            database: <your-database-name>
+            authentication-database: <your-authentication-database>
+            host: <your-host>
+            port: <your-port>
+            username: <your-username>
+            password: <your-password>
+   ```
+9. Open Swagger UI and search the /auth/login endpoint and login with mail: email@some.com 
+   , password: 1234
 
 <!-- USAGE -->
 ## Usage
 
-1. Right-click the class PowerUpApplication and choose Run
-2. Open [http://localhost:8090/swagger-ui/index.html](http://localhost:8090/swagger-ui/index.html) in your web browser
+1. Right-click the class [PlazaMicroserviceApplication.java](src%2Fmain%2Fjava%2Fcom%2Fpragma%2Fpowerup%2Fplazamicroservice%2FPlazaMicroserviceApplication.java) and choose Run
+2. Open [http://localhost:8091/swagger-ui/index.html](http://localhost:8091/swagger-ui/index.html) in your web browser
 
 <!-- ROADMAP -->
 ## Tests

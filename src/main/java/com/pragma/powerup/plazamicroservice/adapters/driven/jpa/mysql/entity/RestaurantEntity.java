@@ -19,10 +19,10 @@ public class RestaurantEntity {
     private String name;
     private String address;
     @ManyToOne
-    @JoinColumn(name = "id_person")
+    @JoinColumn(name = "owner_id",nullable = false)
     private UserEntity userEntity;
-    @Column(unique = true, nullable = false, length = 13)
-    private String phone;
+    @Column(unique = true, length = 13,columnDefinition = "varchar(13) default '0000000000000'")
+    private Long phoneNumber;
     private String urlLogo;
-    private String nit;
+    private Long nit;
 }

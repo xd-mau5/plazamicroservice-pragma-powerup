@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+@Entity
 @Table(name = "dishes_ordered")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,11 +14,12 @@ import lombok.Setter;
 public class DishesOrderedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ManyToOne
+    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dishes")
-    private OrderEntity orderEntity;
-    @ManyToOne
-    @JoinColumn(name = "orders")
     private DishesEntity dishesEntity;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "orders")
+    private OrderEntity orderEntity;
     private int quantity;
 }
